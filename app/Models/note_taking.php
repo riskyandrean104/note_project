@@ -10,6 +10,7 @@ class note_taking extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+    protected $with = ['user', 'company'];
 
     public function user(){
         return $this->belongsTo(User::class);

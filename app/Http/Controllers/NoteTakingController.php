@@ -17,7 +17,7 @@ class NoteTakingController extends Controller
     {
         return view('notes', [
             "title" => "All Notes",
-            "note_taking" => note_taking::with(['company', 'user'])->latest()->get()
+            "note_taking" => note_taking::latest()->get()
         ]);
     }
 

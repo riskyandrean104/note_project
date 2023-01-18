@@ -29,7 +29,7 @@ Route::get('/notes', [NoteTakingController::class, 'index']);
 Route::get('company/{company:company_name}', function (Company $company) {
     return view('notes', [
         'title' => $company->name ,
-        'note_taking' => $company->note_taking->load('company', 'user'),
+        'note_taking' => $company->note_taking,
     ]);
 });
 

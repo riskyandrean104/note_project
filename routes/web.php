@@ -1,11 +1,16 @@
 <?php
 
 use App\Models\Post;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\NoteTakingController;
 use App\Models\company;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\NoteTakingController;
+use App\Http\Controllers\FormInputNoteController;
+use App\Http\Controllers\FormInputContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,25 +23,12 @@ use App\Http\Controllers\CompanyController;
 |
 */
 
-Route::get('/', function(){
-    return view('home', [
-        "title" => "Home"
-    ]);
-});
-
+Route::get('/', [LoginController::class, 'index']);
+Route::get('/register', [RegisterController::class, 'index']);
 Route::get('/notes', [NoteTakingController::class, 'index']);
+Route::get('/form_notes', [FormInputNoteController::class, 'index']);
+Route::get('/form_contacts', [FormInputContactController::class, 'index']);
+Route::get('/contacts', [CompanyController::class, 'index']);
+Route::get('/home',[HomeController::class,'index']);
 
-Route::get('company/{company:company_name}', function (Company $company) {
-    return view('notes', [
-        'title' => $company->name ,
-        'note_taking' => $company->note_taking,
-    ]);
-});
-
-Route::get('/companies', [CompanyController::class, 'index']);
-
-Route::get('/about', function(){
-    return view('about', [
-        "title" => "About"
-    ]);
-});
+Route::post('/register', [RegisterController::class, 'store']);

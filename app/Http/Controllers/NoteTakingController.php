@@ -17,6 +17,7 @@ class NoteTakingController extends Controller
     {
         return view('notes', [
             "title" => "All Notes",
+            "active" => "Notes",
             "note_taking" => note_taking::latest()->get()
         ]);
     }
@@ -50,7 +51,7 @@ class NoteTakingController extends Controller
      */
     public function show(note_taking $note_taking)
     {
-        //
+        // 
     }
 
     /**

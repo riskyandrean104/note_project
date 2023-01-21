@@ -16,7 +16,8 @@ class CompanyController extends Controller
     public function index()
     {
         return view('companies', [
-            "title" => "Company",
+            "title" => "Contacts",
+            "active" => "Contacts",
             "company" => company::with('Note_taking')->latest()->get()
         ]);
     }

@@ -1,43 +1,76 @@
-{{-- <div class="container text-center">
-    <div class="row">
-        <div class="col">
-            <div class="col">
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Active</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                            aria-expanded="false">Dropdown</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Separated link</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                </ul>
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="../../index3.html" class="brand-link">
+        <img src="{{ ('AdminLte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
+            class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">ICS - Notes</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- SidebarSearch Form -->
+        <div class="form-inline">
+            <div class="input-group" data-widget="sidebar-search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search"
+                    aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-sidebar">
+                        <i class="fas fa-search fa-fw"></i>
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="col-6">
-            Input Data
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+       with font-awesome or any other icon font library -->
+                <li class="nav-item">
+                    <a href="/notes" class="nav-link {{ ($title === "Home") }} ? 'active' = ''">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Notes
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/contacts" class="nav-link {{ ($title === "Home") }} ? 'active' = ''">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Contacts
+                        </p>
+                    </a>
+                </li>
+                {{-- Next Project --}}
+                {{-- <li class="nav-item">
+                    <a href="../calendar.html" class="nav-link">
+                        <i class="nav-icon far fa-calendar-alt"></i>
+                        <p>
+                            Calendar
+                            <span class="badge badge-info right">2</span>
+                        </p>
+                    </a>
+                </li> --}}
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+
+    <div class="sidebar-custom">
+        <!-- Sidebar user (optional) -->
+        <div class="user-panel mt-1 pb-1 mb-1 d-flex">
+            <div class="image">
+                <img src="{{ ('AdminLte/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-1" alt="User Image">
             </div>
-            <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <div class="info">
+                <a href="#" class="d-flex">Alexander Pierce</a>
             </div>
-        </div>
-        <div class="col">
-            View
+            <a href="/" class="btn btn-secondary btn-sm pos-right">Logout</a>
         </div>
     </div>
-</div> --}}
+    <!-- /.sidebar-custom -->
+</aside>

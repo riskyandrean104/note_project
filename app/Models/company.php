@@ -12,6 +12,6 @@ class company extends Model
     protected $guarded = ['id'];
 
     public function note_taking(){
-        return $this->hasMany(Note_taking::class);
+        return $this->hasMany(note_taking::class);
     }
 }

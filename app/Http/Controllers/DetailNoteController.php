@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\note_taking;
+use App\Models\company;
 use Illuminate\Http\Request;
 
 class DetailNoteController extends Controller
@@ -13,10 +15,11 @@ class DetailNoteController extends Controller
      */
     public function index()
     {
-        return view('partial/detail_note', [
-            "title" => "Detail_Note",
-            "active" => "Detail_Note",
-            "note_taking" => $note_taking
+        return view('notes', [
+            "title" => "All Notes",
+            "active" => "Notes",
+            "note_taking" => note_taking::where('user_id', auth()->user()->id)->latest()
+            ->filter(request(['search']))->paginate(5)
         ]);
     }
 
@@ -27,7 +30,9 @@ class DetailNoteController extends Controller
      */
     public function create()
     {
-        //
+        return view('forms.form_notes',[
+            "company" => company::all()
+        ]);
     }
 
     /**
@@ -38,16 +43,26 @@ class DetailNoteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'title' => 'required|max:255',
+            'event' => 'required|max:255',
+            'company_id' => 'required',
+            'body' => 'required'
+        ]);
+        $validateData['user_id'] = auth()->user()->id;
+
+        note_taking::create($validateData);
+
+        return redirect('/detail_note')->with('success', 'New note has been added');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\note_taking  $note_taking
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(note_taking $note_takings)
     {
         //
     }
@@ -55,19 +70,22 @@ class DetailNoteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\note_taking  $note_taking
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        // $note_taking = note_taking::findOrFail($id);
+        // return view('forms.form_notes',[
+        //     "company" => company::all()
+        // ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\note_taking  $note_taking
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -78,11 +96,13 @@ class DetailNoteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\note_taking  $note_taking
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        note_taking::destroy($id);
+
+        return redirect('/detail_note')->with('success', 'Note has been deleted');
     }
 }

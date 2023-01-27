@@ -13,7 +13,7 @@ class Storenote_takingRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**

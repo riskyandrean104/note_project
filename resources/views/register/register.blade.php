@@ -18,9 +18,16 @@
 </head>
 
 <body class="hold-transition register-page">
+    @if (session()->has('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close">
+            </button>
+        </div>
+    @endif
     <div class="register-box">
         <div class="register-logo">
-            <a href="../../index2.html"><b>ICS</b>-Notes</a>
+            <b>ICS</b>-Notes
         </div>
 
         <div class="card">
@@ -30,37 +37,51 @@
                 <form action="/register" method="post">
                     @csrf
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Full name">
+                        <input type="text" name="name" id="name"
+                            class="form-control @error('name') is-invalid @enderror" placeholder="Name" required
+                            value="{{ old('name') }}">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
                             </div>
                         </div>
                     </div>
+                    @error('name')
+                        <div class="invalid-feedback">
+                            {{ $messages }}
+                        </div>
+                    @enderror
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input type="email" name="email" id="email"
+                            class="form-control @error('email') is-invalid @enderror" placeholder="Email" required
+                            value="{{ old('email') }}">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
                             </div>
                         </div>
+                        @error('email')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
+
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Password">
+                        <input type="password" name="password" id="password"
+                            class="form-control @error('password') is-invalid @enderror" placeholder="Password"
+                            required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Retype password">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
+                    @error('password')
+                        <div class="invalid-feedback">
+                            {{ $message }}
                         </div>
-                    </div>
+                    @enderror
                     <div class="row">
                         <div class="col-5">
                             <button type="submit" class="btn btn-primary btn-block">Register</button>
@@ -79,11 +100,11 @@
     <!-- /.register-box -->
 
     <!-- jQuery -->
-    <script src="{{ ('AdminLte/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ 'AdminLte/plugins/jquery/jquery.min.js' }}"></script>
     <!-- Bootstrap 4 -->
-    <script src="{{ ('AdminLte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ 'AdminLte/plugins/bootstrap/js/bootstrap.bundle.min.js' }}"></script>
     <!-- AdminLTE App -->
-    <script src="{{ ('AdminLte/dist/js/adminlte.min.js') }}"></script>
+    <script src="{{ 'AdminLte/dist/js/adminlte.min.js' }}"></script>
 </body>
 
 </html>

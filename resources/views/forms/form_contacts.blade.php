@@ -5,31 +5,56 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Add Company</h1>
+                    <h1>Add Note</h1>
                 </div>
             </div>
         </div>
     </section>
-    <form>
+    <form action="/form_contacts" method="post">
+        @csrf
         <div class="card-body">
             <div class="form-group">
-                <label for="exampleInputEmail1">Company Name</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Company Name">
+                <label for="company_name">Company_name</label>
+                <input type="text" class="form-control @error('company_name') is-invalid @enderror" id="company_name"
+                    placeholder="Enter company_name" name="company_name" required value="{{ old('company_name') }}">
+                @error('company_name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Address</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter Company Address">
+                <label for="address">Address</label>
+                <input type="text" class="form-control @error('address') is-invalid @enderror" id="address"
+                    placeholder="Enter address" name="address" required value="{{ old('address') }}">
+                @error('address')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Phone_number</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter Company Phone Number">
+                <label for="phone_number">Phone_number</label>
+                <input type="text" class="form-control @error('phone_number') is-invalid @enderror" id="phone_number"
+                    placeholder="Enter phone_number" name="phone_number" required value="{{ old('phone_number') }}">
+                @error('phone_number')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Email</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter Company Email">
+                <label for="email">Email</label>
+                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
+                    placeholder="Enter email" name="email" required value="{{ old('email') }}">
+                @error('email')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-        </div>
-        <button type="button" class="btn btn-lg float-right btn-outline-primary">Sumbit</button>
-        <a href="/notes" class="btn btn-secondary">Cancel</a>
+            
+        <button type="submit" class="btn btn-lg float-right btn-outline-primary">Sumbit</button>
+        <a href="/contacts" class="btn btn-secondary">Cancel</a>
     </form>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\note_taking;
+use App\Models\company;
 use App\Http\Requests\Storenote_takingRequest;
 use App\Http\Requests\Updatenote_takingRequest;
 
@@ -15,11 +16,7 @@ class NoteTakingController extends Controller
      */
     public function index()
     {
-        return view('notes', [
-            "title" => "All Notes",
-            "active" => "Notes",
-            "note_taking" => note_taking::latest()->get()
-        ]);
+        // 
     }
 
     /**
@@ -29,7 +26,11 @@ class NoteTakingController extends Controller
      */
     public function create()
     {
-        //
+        return view('forms.form_notes',[
+            "title" => "Form Input Notes",
+            "active" => "Form Input Notes",
+            "company" => company::all()
+        ]);
     }
 
     /**
@@ -40,9 +41,9 @@ class NoteTakingController extends Controller
      */
     public function store(Storenote_takingRequest $request)
     {
-        //
-    }
+        // 
 
+    }
     /**
      * Display the specified resource.
      *
@@ -51,7 +52,7 @@ class NoteTakingController extends Controller
      */
     public function show(note_taking $note_taking)
     {
-        // 
+        //
     }
 
     /**
@@ -60,9 +61,12 @@ class NoteTakingController extends Controller
      * @param  \App\Models\note_taking  $note_taking
      * @return \Illuminate\Http\Response
      */
-    public function edit(note_taking $note_taking)
+    public function edit($id)
     {
-        //
+        $note_taking = note_taking::findOrFail($id);
+        return view('forms.form_notes',[
+            "company" => company::all()
+        ]);
     }
 
     /**
@@ -85,6 +89,9 @@ class NoteTakingController extends Controller
      */
     public function destroy(note_taking $note_taking)
     {
-        //
+        dd($note_taking->id);
+        note_taking::destroy($note_taking->id);
+
+        return redirect('/notes')->with('success', 'Note has been deleted');
     }
 }

@@ -29,7 +29,10 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view('forms.form_contacts', [
+            "title" => "Contacts",
+            "active" => "Contacts"
+        ]);
     }
 
     /**
@@ -40,7 +43,16 @@ class CompanyController extends Controller
      */
     public function store(StorecompanyRequest $request)
     {
-        //
+        $validateData = $request->validate([
+            'company_name' => 'required|min:5|max:255',
+            'address' => 'required|max:255',
+            'phone_number' => 'required|max:255',
+            'email' => 'required|email:dns'
+        ]);
+
+        Company::create($validateData);
+
+        return redirect('/contacts');
     }
 
     /**

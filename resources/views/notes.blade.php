@@ -2,6 +2,13 @@
 
 @section('container')
     <!-- Content Header (Page header) -->
+    @if (session()->has('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close">
+            </button>
+        </div>
+    @endif
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -10,7 +17,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <a href="/form_notes">
+                        <a href="/form_notes" method="get">
                             <button type="button" class="btn text-end">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-plus-square" viewBox="0 0 16 16">
@@ -26,31 +33,63 @@
                         </a>
                     </ol>
                 </div>
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <form action="/detail_note">
+                            <div class="input-group">
+                                <input type="search" class="form-control form-control-lg"
+                                    placeholder="Type your keywords here" name="search"
+                                    value="{{ request('search') }}">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-lg btn-default">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
-    <div class="row">
-        <div class="col-5 col-sm-3">
-            <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
-                @foreach ($note_taking as $note_taking)
-                    <div class="list-group list-group-flush border-bottom scrollarea">
-                        <a href="/notes/{{ $note_taking->id }}" class="list-group-item list-group-item-action py-3 lh-sm"
-                            aria-current="true">
-                            <div class="d-flex w-100 align-items-center justify-content-between">
-                                <h5 class="mb-1">{{ $note_taking->title }}</h5>
-                                <small>Last Update : {{ $note_taking->updated_at->diffForHumans() }}</small>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                @foreach ($note_taking as $note_takings)
+                    <div class="col-12 mb-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title"><b>{{ $note_takings->title }}</b></h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                        title="Collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="d-flex w-100 align-items-center justify-content-between">
-                                <small> <b>Event :</b>{{ $note_taking->event }}</small>
+                            <div class="card-body">
+                                {!! $note_takings->body !!}
+                                <div class="card-footer">
+                                    Company : {{ $note_takings->company->company_name }} |
+                                    Event : {{ $note_takings->event }} |
+                                    Last update : {{ $note_takings->updated_at->diffForHumans() }}
+                                </div>
                             </div>
-                            <div class="d-flex w-100 align-items-center justify-content-between">
-                                <small> <b>Company :</b> {{ $note_taking->company->company_name }}</small>
-                            </div>
-                            <div class="col-10 mb-1 small justify-content-between">{!! Str::substr($note_taking->body, 0, 100) !!}</div>
-                        </a>
+                        </div>
+                        <a href="/form_notes/{{ $note_takings->id }}/edit" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="/detail_note/{{ $note_takings->id }}" method="post" class="d-inline">
+                            @method('delete')
+                            @csrf
+                            <input class="btn btn-sm btn-danger" type="submit" value="Delete" onclick="return confirm('Are you sure?')">
+                        </form>
                     </div>
                 @endforeach
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        {{ $note_taking->links() }}
+                    </ul>
+                </nav>
             </div>
         </div>
-    </div>
+    </section>
 @endsection()

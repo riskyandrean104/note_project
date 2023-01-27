@@ -12,11 +12,27 @@ class note_taking extends Model
     protected $guarded = ['id'];
     protected $with = ['user', 'company'];
 
+    public function scopeFilter($query, array $filters){
+        $query->when($filters['search'] ?? false, function($query, $search){
+            return $query->where(function($query) use ($search){
+                return $query->where('title', 'like', '%'.$search.'%')
+                            ->orWhere('body', 'like', '%'.$search.'%')
+                            ->orWhere('event', 'like', '%'.$search.'%');
+            });
+        });
+
+        // $query->when($filters['company'] ?? false, function($query, $company){
+        //     return $query->whereHas('company', function($query) use ($company){
+        //         $query->where('company_name', $company);
+        //     });
+        // });
+    }
+
     public function user(){
         return $this->belongsTo(User::class);
     }
 
     public function company(){
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(company::class);
     }
 }

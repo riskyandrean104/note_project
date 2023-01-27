@@ -1,22 +1,23 @@
-@extends('layouts.main')
+@extends('detail_note')
 
 @section('container')
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Add Note</h1>
+                    <h1>Edit Note</h1>
                 </div>
             </div>
         </div>
     </section>
-    <form action="/detail_note" method="post">
+    <form action="/detail_note/{{ $note_taking->id }}" method="post">
+        @method('put')
         @csrf
         <div class="card-body">
             <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" class="form-control @error('title') is-invalid @enderror" id="title"
-                    placeholder="Enter Note Title" name="title" required value="{{ old('title') }}">
+                    placeholder="Enter Note Title" name="title" required value="{{ old('title', $note_taking->title) }}">
             </div>
             @error('title')
                 <div class="invalid-feedback">
@@ -26,7 +27,7 @@
             <div class="form-group">
                 <label for="event">Event</label>
                 <input type="text" class="form-control @error('event') is-invalid @enderror" id="event"
-                    placeholder="Enter Event Title" name="event" required value="{{ old('event') }}">
+                    placeholder="Enter Event Title" name="event" required value="{{ old('event', $note_taking->event) }}">
             </div>
             @error('event')
                 <div class="invalid-feedback">
@@ -50,7 +51,7 @@
                 @error('body')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
-                <input id="body" type="hidden" name="body" value="{{ old('body') }}">
+                <input id="body" type="hidden" name="body" value="{{ old('body', $note_taking->body) }}">
                 <trix-editor input="body"></trix-editor>
             </div>
         </div>

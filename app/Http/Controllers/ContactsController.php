@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\company;
-use App\Http\Requests\StorecompanyRequest;
-use App\Http\Requests\UpdatecompanyRequest;
+use Illuminate\Http\Request;
 
-class CompanyController extends Controller
+class ContactsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -38,10 +37,10 @@ class CompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StorecompanyRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorecompanyRequest $request)
+    public function store(Request $request)
     {
         $validateData = $request->validate([
             'company_name' => 'required|min:5|max:255',
@@ -72,19 +71,24 @@ class CompanyController extends Controller
      * @param  \App\Models\company  $company
      * @return \Illuminate\Http\Response
      */
-    public function edit(company $company)
+    public function edit($id)
     {
-        //
+        $company = company::findOrFail($id);
+        return view('forms.form_contacts', [
+            "title" => "Contacts",
+            "active" => "Contacts",
+            "company" => $company
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatecompanyRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\company  $company
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatecompanyRequest $request, company $company)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -95,8 +99,10 @@ class CompanyController extends Controller
      * @param  \App\Models\company  $company
      * @return \Illuminate\Http\Response
      */
-    public function destroy(company $company)
+    public function destroy($id)
     {
-        //
+        Company::create($id);
+
+        return redirect('/contacts')->with('success', 'Note has been deleted');
     }
 }

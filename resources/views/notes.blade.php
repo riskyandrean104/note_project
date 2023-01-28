@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <a href="/form_notes" method="get">
+                        <a href="/detail_note/create" method="get">
                             <button type="button" class="btn text-end">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-plus-square" viewBox="0 0 16 16">
@@ -72,11 +72,11 @@
                                 <div class="card-footer">
                                     Company : {{ $note_takings->company->company_name }} |
                                     Event : {{ $note_takings->event }} |
-                                    Last update : {{ $note_takings->updated_at->diffForHumans() }}
+                                    Last update : {{ $note_takings->created_at }}
                                 </div>
                             </div>
                         </div>
-                        <a href="/form_notes/{{ $note_takings->id }}/edit" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="/detail_note/{{ $note_takings->id }}/edit" class="btn btn-sm btn-warning">Edit</a>
                         <form action="/detail_note/{{ $note_takings->id }}" method="post" class="d-inline">
                             @method('delete')
                             @csrf

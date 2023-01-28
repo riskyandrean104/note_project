@@ -1,4 +1,4 @@
-@extends('detail_note')
+@extends('layouts.main')
 
 @section('container')
     <section class="content-header">
@@ -38,7 +38,7 @@
                 <label for="company_id">Company</label>
                 <select class="form-control select2" id="company_id" name="company_id" style="width: 100%;">
                     @foreach ($company as $company)
-                        @if (old('company_id') == $company->id)
+                        @if (old('company_id', $note_taking->company_id) == $company->id)
                             <option value="{{ $company->id }}" selected>{{ $company->company_name }}</option>
                         @else
                             <option value="{{ $company->id }}">{{ $company->company_name }}</option>

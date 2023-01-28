@@ -10,20 +10,18 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ 'AdminLte/plugins/fontawesome-free/css/all.min.css' }}">
+    <link rel="stylesheet" href="{{ asset('AdminLte/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="{{ 'AdminLte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' }}">
+    <link rel="stylesheet" href="{{ asset('AdminLte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ 'AdminLte/dist/css/adminlte.min.css' }}">
-    <!-- summernote -->
-    <link rel="stylesheet" href="{{ 'AdminLte/plugins/summernote/summernote-bs4.min.css' }}">
+    <link rel="stylesheet" href="{{ asset('AdminLte/dist/css/adminlte.min.css') }}">
     <!-- include libraries(jQuery, bootstrap) -->
     <script type="text/javascript" src="//code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" />
     <script type="text/javascript" src="cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Select2 -->
-    <link rel="stylesheet" href="{{ 'AdminLte/plugins/select2/css/select2.min.css' }}">
-    <link rel="stylesheet" href="{{ 'AdminLte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' }}">
+    <link rel="stylesheet" href="{{ asset('AdminLte/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('AdminLte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     {{-- Include library trix editor --}}
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
     <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
@@ -74,15 +72,15 @@
     <!-- ./wrapper -->
 
     <!-- jQuery -->
-    <script src="{{ 'AdminLte/plugins/jquery/jquery.min.js' }}"></script>
+    <script src="{{ asset('AdminLte/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
-    <script src="{{ 'AdminLte/plugins/bootstrap/js/bootstrap.bundle.min.js' }}"></script>
+    <script src="{{ asset('AdminLte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- overlayScrollbars -->
-    <script src="{{ 'AdminLte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' }}"></script>
+    <script src="{{ asset('AdminLte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <!-- Select2 -->
-    <script src="{{ 'AdminLte/plugins/select2/js/select2.full.min.js' }}"></script>
+    <script src="{{ asset('AdminLte/plugins/select2/js/select2.full.min.js') }}"></script>
     <!-- AdminLTE App -->
-    <script src="{{ 'AdminLte/dist/js/adminlte.min.js' }}"></script>
+    <script src="{{ asset('AdminLte/dist/js/adminlte.min.js') }}"></script>
 </body>
 
 </html>

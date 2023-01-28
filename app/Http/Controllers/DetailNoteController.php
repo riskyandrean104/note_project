@@ -75,10 +75,11 @@ class DetailNoteController extends Controller
      */
     public function edit($id)
     {
-        // $note_taking = note_taking::findOrFail($id);
-        // return view('forms.form_notes',[
-        //     "company" => company::all()
-        // ]);
+        $note_taking = note_taking::findOrFail($id);
+        return view('forms.form_edit_notes',[
+            "note_taking" => $note_taking,
+            "company" => company::all()
+        ]);
     }
 
     /**
@@ -90,7 +91,17 @@ class DetailNoteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validateData = $request->validate([
+            'title' => 'required|max:255',
+            'event' => 'required|max:255',
+            'company_id' => 'required',
+            'body' => 'required'
+        ]);
+        $validateData['user_id'] = auth()->user()->id;
+
+        note_taking::create($validateData);
+
+        return redirect('/detail_note')->with('success', 'New note has been added');
     }
 
     /**

@@ -10,7 +10,7 @@
             </div>
         </div>
     </section>
-    <form action="/form_contacts/{{ $company->id }}" method="post">
+    <form action="/contacts/{{ $company->id }}" method="post">
         @method('put')
         @csrf
         <div class="card-body">

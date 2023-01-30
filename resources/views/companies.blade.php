@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <a href="/contacts/create">
+                        <a href="/contacts/create" methdo="get">
                             <button type="button" class="btn text-end">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-plus-square" viewBox="0 0 16 16">
@@ -25,10 +25,25 @@
                         </a>
                     </ol>
                 </div>
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <form action="/contacts">
+                            <div class="input-group">
+                                <input type="search" class="form-control form-control-lg"
+                                    placeholder="Type your keywords here" name="search" value="{{ request('search') }}">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-lg btn-default">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
-    <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;">
+    {{-- <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;">
         @foreach ($company as $company)
             <div class="list-group list-group-flush border-bottom scrollarea">
                 <a href="#" class="list-group-item list-group-item-action py-3 lh-sm" aria-current="true">
@@ -43,5 +58,61 @@
                 </a>
             </div>
         @endforeach
-    </div>
+    </div> --}}
+    <section class="content">
+
+        <!-- Default box -->
+        <div class="card card-solid">
+            <div class="card-body pb-0">
+                <div class="row">
+                    @foreach ($company as $Company)
+                        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+                            <div class="card bg-light d-flex flex-fill">
+                                <div class="card-header text-muted border-bottom-0">
+                                </div>
+                                <div class="card-body pt-0">
+                                    <div class="col">
+                                        <div class="col">
+                                            <h2 class="lead"><b>{{ $Company->company_name }}</b></h2>
+                                            <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                <li class="small"><span class="fa-li"><i
+                                                            class="fas fa-lg fa-building"></i></span> Address:
+                                                    {{ $Company->address }}</li>
+                                                <li class="small"><span class="fa-li"><i
+                                                            class="fas fa-lg fa-phone"></i></span> Phone :
+                                                    {{ $Company->phone_number }}
+                                                </li>
+                                                <li class="small"><span class="fa-li"><i
+                                                            class="fas fa-lg fa-envelope"></i></span> Email :
+                                                    {{ $Company->email }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="text-right">
+                                        <a href="/contacts/{{ $Company->id }}/edit" class="btn btn-sm bg-warning">
+                                            Edit
+                                        </a>
+                                        <form action="/contacts/{{ $Company->id }}" method="post" class="d-inline">
+                                            @method('delete')
+                                            @csrf
+                                            <input class="btn btn-sm btn-danger" type="submit" value="Delete"
+                                                onclick="return confirm('Are you sure?')">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            {{ $company->links() }}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection()

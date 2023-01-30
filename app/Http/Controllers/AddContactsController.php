@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\company;
 use Illuminate\Http\Request;
 
-class ContactsController extends Controller
+class AddContactsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,11 +14,7 @@ class ContactsController extends Controller
      */
     public function index()
     {
-        return view('companies', [
-            "title" => "Contacts",
-            "active" => "Contacts",
-            "company" => company::with('Note_taking')->orderBy('company_name')->filter(request(['search']))->paginate(9)
-        ]);
+        //
     }
 
     /**
@@ -28,9 +24,9 @@ class ContactsController extends Controller
      */
     public function create()
     {
-        return view('forms.form_contacts', [
-            "title" => "Contacts",
-            "active" => "Contacts"
+        return view('forms.form_contact', [
+            "title" => "Contact",
+            "active" => "Contact"
         ]);
     }
 
@@ -51,7 +47,7 @@ class ContactsController extends Controller
 
         Company::create($validateData);
 
-        return redirect('/contacts');
+        return redirect('/detail_note/create');
     }
 
     /**
@@ -71,14 +67,9 @@ class ContactsController extends Controller
      * @param  \App\Models\company  $company
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(company $company)
     {
-        $company = company::findOrFail($id);
-        return view('forms.form_edit_contacts', [
-            "title" => "Contacts",
-            "active" => "Contacts",
-            "company" => $company
-        ]);
+        //
     }
 
     /**
@@ -88,21 +79,9 @@ class ContactsController extends Controller
      * @param  \App\Models\company  $company
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, company $company)
     {
-        $company = company::findOrFail($id);
-        $rules = [
-            'company_name' => 'required|min:5|max:255',
-            'address' => 'required|max:255',
-            'phone_number' => 'required|max:255',
-            'email' => 'required'
-        ];
-        $validateData = $request->validate($rules);
-
-        company::where('id', $company->id)
-                ->update($validateData);
-
-        return redirect('/contacts')->with('success', 'New note has been updated');
+        //
     }
 
     /**
@@ -111,10 +90,8 @@ class ContactsController extends Controller
      * @param  \App\Models\company  $company
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(company $company)
     {
-        Company::destroy($id);
-
-        return redirect('/contacts')->with('success', 'Note has been deleted');
+        //
     }
 }

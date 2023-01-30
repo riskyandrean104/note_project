@@ -45,4 +45,8 @@ class User extends Authenticatable
     public function note_taking(){
         return $this->hasMany(Note_taking::class);
     }
+
+    // public function Role(){
+    //     return $this->belongsTo(Role::class);
+    // }
 }

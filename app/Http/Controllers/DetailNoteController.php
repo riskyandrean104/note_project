@@ -18,7 +18,7 @@ class DetailNoteController extends Controller
         return view('notes', [
             "title" => "All Notes",
             "active" => "Notes",
-            "note_taking" => note_taking::where('user_id', auth()->user()->id)->latest()
+            "note_taking" => note_taking::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')
             ->filter(request(['search']))->paginate(5)
         ]);
     }
@@ -91,17 +91,20 @@ class DetailNoteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validateData = $request->validate([
+        $note_taking = note_taking::findOrFail($id);
+        $rules = [
             'title' => 'required|max:255',
             'event' => 'required|max:255',
             'company_id' => 'required',
             'body' => 'required'
-        ]);
+        ];
+        $validateData = $request->validate($rules);
         $validateData['user_id'] = auth()->user()->id;
 
-        note_taking::create($validateData);
+        note_taking::where('id', $note_taking->id)
+                    ->update($validateData);
 
-        return redirect('/detail_note')->with('success', 'New note has been added');
+        return redirect('/detail_note')->with('success', 'New note has been updated');
     }
 
     /**

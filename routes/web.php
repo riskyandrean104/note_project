@@ -9,6 +9,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DetailNoteController;
+use App\Http\Controllers\AddContactsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,9 +29,6 @@ Route::post('/', [LoginController::Class, 'authenticate']);
 Route::post('/logout', [LoginController::Class, 'logout']);
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::resource('/contacts', ContactsController::class);
-//('/contacts', [CompanyController::class, 'index']);
-Route::get('/form_contacts', [CompanyController::class, 'create']);
-Route::post('/form_contacts', [CompanyController::class, 'store']);
-
-Route::resource('/detail_note', DetailNoteController::class);
+Route::resource('/contact', AddContactsController::class)->middleware('auth');
+Route::resource('/contacts', ContactsController::class)->middleware('auth');
+Route::resource('/detail_note', DetailNoteController::class)->middleware('auth');

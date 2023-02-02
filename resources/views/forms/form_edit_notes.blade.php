@@ -56,7 +56,7 @@
             </div>
         </div>
         <button type="submit" class="btn btn-lg float-right btn-outline-primary">Sumbit</button>
-        <a href="/detail_note" class="btn btn-secondary">Cancel</a>
+        <a href="/notes" class="btn btn-secondary">Cancel</a>
     </form>
 
     <script>

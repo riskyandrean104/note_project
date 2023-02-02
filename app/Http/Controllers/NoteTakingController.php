@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\note_taking;
-use App\Models\company;
+use App\Models\contact_person;
+use App\Models\event;
 use Illuminate\Http\Request;
+use App\Http\Requests\Storenote_takingRequest;
+use App\Http\Requests\Updatenote_takingRequest;
 
-class DetailNoteController extends Controller
+class NoteTakingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,8 +33,9 @@ class DetailNoteController extends Controller
      */
     public function create()
     {
-        return view('forms.form_notes',[
-            "company" => company::all()
+        return view('forms.form_add_notes',[
+            "event" => event::orderBy('event_name')->get(),
+            "contact" => contact_person::orderBy('contact_name')->get()
         ]);
     }
 
@@ -43,9 +47,11 @@ class DetailNoteController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $validateData = $request->validate([
             'title' => 'required|max:255',
-            'event' => 'required|max:255',
+            'event_id' => 'required',
+            'contact_id' => 'required',
             'company_id' => 'required',
             'body' => 'required'
         ]);
@@ -53,7 +59,7 @@ class DetailNoteController extends Controller
 
         note_taking::create($validateData);
 
-        return redirect('/detail_note')->with('success', 'New note has been added');
+        return redirect('/notes')->with('success', 'New note has been added');
     }
 
     /**

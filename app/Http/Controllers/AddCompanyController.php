@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\company;
-use App\Models\contact_person;
 use Illuminate\Http\Request;
 
-class AddContactsController extends Controller
+class AddCompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,9 +24,7 @@ class AddContactsController extends Controller
      */
     public function create()
     {
-        return view('forms.form_add_contact_note', [
-            'company' => company::orderBy('company_name')->get()
-        ]);
+        return view('forms.form_add_company_note');
     }
 
     /**
@@ -39,16 +36,14 @@ class AddContactsController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'company_id' => 'required',
-            'contact_name' => 'required|min:5|max:255',
-            'phone_number' => 'required|max:255',
-            'email' => 'required'
+            'company_name' => 'required|min:5|max:255',
+            'company_country' => 'required|min:5|max:255'
         ]);
         $validateData['user_id'] = auth()->user()->id;
 
-        contact_person::create($validateData);
+        Company::create($validateData);
 
-        return redirect('/notes/create');
+        return redirect('/contact/create');
     }
 
     /**

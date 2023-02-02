@@ -10,7 +10,7 @@
             </div>
         </div>
     </section>
-    <form action="/contact" method="post">
+    <form action="/companies" method="post">
         @csrf
         <div class="card-body">
             <div class="form-group">
@@ -55,6 +55,6 @@
             @enderror
 
             <button type="submit" class="btn btn-lg float-right btn-outline-primary">Sumbit</button>
-            <a href="/detail_note/create" class="btn btn-secondary">Cancel</a>
+            <a href="/contacts" class="btn btn-secondary">Cancel</a>
     </form>
 @endsection

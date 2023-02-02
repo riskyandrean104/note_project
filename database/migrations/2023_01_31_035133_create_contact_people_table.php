@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNoteTakingsTable extends Migration
+class CreateContactPeopleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateNoteTakingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('note_takings', function (Blueprint $table) {
+        Schema::create('contact_people', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('contact_id');
-            $table->foreignId('event_id');
-            $table->string('title');
-            $table->text('body');
+            $table->foreignId('company_id');
+            $table->string('contact_name');
+            $table->string('phone_number');
+            $table->string('email')->unique();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateNoteTakingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('note_takings');
+        Schema::dropIfExists('contact_people');
     }
 }

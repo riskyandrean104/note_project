@@ -11,8 +11,12 @@ class company extends Model
 
     protected $guarded = ['id'];
 
-    public function note_taking(){
-        return $this->hasMany(note_taking::class);
+    // public function note_taking(){
+    //     return $this->hasMany(note_taking::class);
+    // }
+
+    public function contact_person(){
+        return $this->hasMany(contact_person::class);
     }
 
     public function scopeFilter($query, array $filters){

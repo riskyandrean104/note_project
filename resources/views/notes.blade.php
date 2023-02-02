@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <a href="/detail_note/create" method="get">
+                        <a href="/notes/create" method="get">
                             <button type="button" class="btn text-end">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-plus-square" viewBox="0 0 16 16">
@@ -55,11 +55,11 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                @foreach ($note_taking as $note_takings)
+                @foreach ($note_taking as $Note_taking)
                     <div class="col-12 mb-3">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title"><b>{{ $note_takings->title }}</b></h3>
+                                <h3 class="card-title"><b>{{ $Note_taking->title }}</b></h3>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse"
                                         title="Collapse">
@@ -68,16 +68,16 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                {!! $note_takings->body !!}
+                                {!! $Note_taking->body !!}
                                 <div class="card-footer">
-                                    Company : {{ $note_takings->company->company_name }} |
-                                    Event : {{ $note_takings->event }} |
-                                    Last update : {{ $note_takings->created_at }}
+                                    {{-- Contact Name : {{ $Note_taking->contact_person->contact_name }} | --}}
+                                    Event : {{ $Note_taking->event->event_name }} |
+                                    Last update : {{ $Note_taking->created_at }}
                                 </div>
                             </div>
                         </div>
-                        <a href="/detail_note/{{ $note_takings->id }}/edit" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="/detail_note/{{ $note_takings->id }}" method="post" class="d-inline">
+                        <a href="/notes/{{ $Note_taking->id }}/edit" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="/notes/{{ $Note_taking->id }}" method="post" class="d-inline">
                             @method('delete')
                             @csrf
                             <input class="btn btn-sm btn-danger" type="submit" value="Delete" onclick="return confirm('Are you sure?')">

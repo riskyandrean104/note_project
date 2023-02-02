@@ -46,6 +46,18 @@ class User extends Authenticatable
         return $this->hasMany(Note_taking::class);
     }
 
+    public function event(){
+        return $this->hasMany(event::class);
+    }
+
+    public function company(){
+        return $this->hasMany(company::class);
+    }
+
+    public function contact_person(){
+        return $this->hasMany(contact_person::class);
+    }
+
     // public function Role(){
     //     return $this->belongsTo(Role::class);
     // }

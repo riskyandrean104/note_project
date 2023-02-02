@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\company;
 use Illuminate\Http\Request;
 
-class ContactsController extends Controller
+class CompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -51,7 +51,7 @@ class ContactsController extends Controller
 
         Company::create($validateData);
 
-        return redirect('/contacts');
+        return redirect('/companies');
     }
 
     /**
@@ -102,7 +102,7 @@ class ContactsController extends Controller
         company::where('id', $company->id)
                 ->update($validateData);
 
-        return redirect('/contacts')->with('success', 'New note has been updated');
+        return redirect('/companies')->with('success', 'New note has been updated');
     }
 
     /**
@@ -115,6 +115,6 @@ class ContactsController extends Controller
     {
         Company::destroy($id);
 
-        return redirect('/contacts')->with('success', 'Note has been deleted');
+        return redirect('/companies')->with('success', 'Note has been deleted');
     }
 }

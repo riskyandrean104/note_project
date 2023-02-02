@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\company;
-use App\Models\contact_person;
-use Illuminate\Http\Request;
+use App\Models\event;
+use App\Http\Requests\StoreeventRequest;
+use App\Http\Requests\UpdateeventRequest;
 
-class AddContactsController extends Controller
+class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,10 @@ class AddContactsController extends Controller
      */
     public function index()
     {
-        //
+        return view('events', [
+            "events" => event::where('user_id', auth()->user()->id)->orderBy('event_name')
+            ->filter(request(['search']))->paginate(5)
+        ]);
     }
 
     /**
@@ -25,28 +28,23 @@ class AddContactsController extends Controller
      */
     public function create()
     {
-        return view('forms.form_add_contact_note', [
-            'company' => company::orderBy('company_name')->get()
-        ]);
+        return view('forms.form_add_event');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreeventRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreeventRequest $request)
     {
         $validateData = $request->validate([
-            'company_id' => 'required',
-            'contact_name' => 'required|min:5|max:255',
-            'phone_number' => 'required|max:255',
-            'email' => 'required'
+            'event_name' => 'required|min:5|max:255',
         ]);
         $validateData['user_id'] = auth()->user()->id;
 
-        contact_person::create($validateData);
+        event::create($validateData);
 
         return redirect('/notes/create');
     }
@@ -54,10 +52,10 @@ class AddContactsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\company  $company
+     * @param  \App\Models\event  $event
      * @return \Illuminate\Http\Response
      */
-    public function show(company $company)
+    public function show(event $event)
     {
         //
     }
@@ -65,10 +63,10 @@ class AddContactsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\company  $company
+     * @param  \App\Models\event  $event
      * @return \Illuminate\Http\Response
      */
-    public function edit(company $company)
+    public function edit(event $event)
     {
         //
     }
@@ -76,11 +74,11 @@ class AddContactsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\company  $company
+     * @param  \App\Http\Requests\UpdateeventRequest  $request
+     * @param  \App\Models\event  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, company $company)
+    public function update(UpdateeventRequest $request, event $event)
     {
         //
     }
@@ -88,10 +86,10 @@ class AddContactsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\company  $company
+     * @param  \App\Models\event  $event
      * @return \Illuminate\Http\Response
      */
-    public function destroy(company $company)
+    public function destroy(event $event)
     {
         //
     }

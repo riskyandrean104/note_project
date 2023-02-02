@@ -5,11 +5,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>List company</h1>
+                    <h1>List Contacts</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <a href="/companies/create" methdo="get">
+                        <a href="/contacts/create" methdo="get">
                             <button type="button" class="btn text-end">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-plus-square" viewBox="0 0 16 16">
@@ -20,7 +20,7 @@
                                         d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z">
                                     </path>
                                 </svg>
-                                Add Company
+                                Add Contact
                             </button>
                         </a>
                     </ol>
@@ -49,7 +49,7 @@
         <div class="card card-solid">
             <div class="card-body pb-0">
                 <div class="row">
-                    @foreach ($company as $Company)
+                    @foreach ($contact as $Contact)
                         <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
                             <div class="card bg-light d-flex flex-fill">
                                 <div class="card-header text-muted border-bottom-0">
@@ -57,29 +57,29 @@
                                 <div class="card-body pt-0">
                                     <div class="col">
                                         <div class="col">
-                                            <h2 class="lead"><b>{{ $Company->company_name }}</b></h2>
+                                            <h2 class="lead"><b>{{ $Contact->contact_name }}</b></h2>
                                             <ul class="ml-4 mb-0 fa-ul text-muted">
                                                 <li class="small"><span class="fa-li"><i
-                                                            class="fas fa-lg fa-building"></i></span> Address:
-                                                    {{ $Company->address }}</li>
-                                                <li class="small"><span class="fa-li"><i
                                                             class="fas fa-lg fa-phone"></i></span> Phone :
-                                                    {{ $Company->phone_number }}
+                                                    {{ $Contact->phone_number }}
                                                 </li>
                                                 <li class="small"><span class="fa-li"><i
                                                             class="fas fa-lg fa-envelope"></i></span> Email :
-                                                    {{ $Company->email }}
+                                                    {{ $Contact->email }}
                                                 </li>
+                                                <li class="small"><span class="fa-li"><i
+                                                            class="fas fa-lg fa-building"></i></span> Company Name:
+                                                    {{ $Contact->company->company_name }}</li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-footer">
                                     <div class="text-right">
-                                        <a href="/companies/{{ $Company->id }}/edit" class="btn btn-sm bg-warning">
+                                        <a href="/contacts/{{ $Contact->id }}/edit" class="btn btn-sm bg-warning">
                                             Edit
                                         </a>
-                                        <form action="/companies/{{ $Company->id }}" method="post" class="d-inline">
+                                        <form action="/contacts/{{ $Contact->id }}" method="post" class="d-inline">
                                             @method('delete')
                                             @csrf
                                             <input class="btn btn-sm btn-danger" type="submit" value="Delete"
@@ -92,11 +92,11 @@
                     @endforeach
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
-                            {{ $company->links() }}
+                            {{ $contact->links() }}
                         </ul>
                     </nav>
                 </div>
             </div>
         </div>
     </section>
-@endsection()
+@endsection

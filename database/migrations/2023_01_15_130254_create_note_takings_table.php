@@ -15,9 +15,10 @@ class CreateNoteTakingsTable extends Migration
     {
         Schema::create('note_takings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('contact_id');
-            $table->foreignId('event_id');
+            $table->string('user_id');
+            $table->string('contact');
+            $table->string('event');
+            $table->string('company');
             $table->string('title');
             $table->text('body');
             $table->timestamps();

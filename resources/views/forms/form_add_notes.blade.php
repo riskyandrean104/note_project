@@ -53,44 +53,59 @@
                 <label for="title">Title</label>
                 <input type="text" class="form-control @error('title') is-invalid @enderror" id="title"
                     placeholder="Enter Note Title" name="title" required value="{{ old('title') }}">
+                @error('title')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-            @error('title')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-            @enderror
             <div class="form-group">
-                <label for="event_id">Event</label>
-                <select class="form-control js-example-basic-single" id="event_id" name="event_id" style="width: 100%;">
+                <label for="event">Event</label>
+                <select class="form-control js-example-basic-single" id="event" name="event" style="width: 100%;">
+                    <option hidden>-Select Event-</option>
                     @foreach ($event as $Event)
-                        @if (old('event_id') == $Event->id)
-                            <option value="{{ $Event->id }}" selected>{{ $Event->event_name }}</option>
+                        @if (old('event_name') == $Event->event_name)
+                            <option value="{{ $Event->event_name }}" selected>{{ $Event->event_name }}</option>
                         @else
-                            <option value="{{ $Event->id }}">{{ $Event->event_name }}</option>
+                            <option value="{{ $Event->event_name }}">{{ $Event->event_name }}</option>
                         @endif
                     @endforeach
                 </select>
+                @error('event')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-            @error('event_id')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-            @enderror
-            <div class="form-group">
-                <label for="contact_id">Contact</label>
-                <select class="form-control js-example-basic-single" id="contact_id" name="contact_id" style="width: 100%;">
+            {{-- <div class="form-group">
+                <label for="contact">Contact</label>
+                <select class="form-control js-example-basic-single" id="contact" name="contact" style="width: 100%;">
+                    <option value="">-Select Contact-</option>
                     @foreach ($contact as $Contact)
-                        @if (old('contact_id') == $Contact->id)
-                            <option value="{{ $Contact->id }}" selected>{{ $Contact->contact_name }}</option>
-                            <label for="company_id">Company</label>
-                            <input type="text" class="form-control @error('company_id') is-invalid @enderror" id="company_id"
-                                name="company_id" value="{{ $Contact->company->company_name }}" readonly>
-                        @else
-                            <option value="{{ $Contact->id }}">{{ $Contact->contact_name }}</option>
-                        @endif
+                        <option value="{{ $Contact->contact_name }}" data-company="{{ $Contact->company }}">
+                            {{ $Contact->contact_name }}</option>
+                    @endforeach
+                </select>
+                <label for="company" class="mt-3">Company</label>
+
+                <input type="text" class="form-control @error('company') is-invalid @enderror" id="company"
+                    name="company" readonly>
+            </div> --}}
+
+            <div class="form-group">
+                <label for="company">Company</label>
+                <select name="company" id="company" class="form-control js-example-basic-single">
+                    <option hidden>-Select Company-</option>
+                    @foreach ($contact as $Contact)
+                        <option value="{{ $Contact->company }}">{{ $Contact->company }}</option>
                     @endforeach
                 </select>
             </div>
+            <div class="mt-3 form-group">
+                <label for="contact">Contact</label>
+                <select name="contact" id="contact" class="form-control js-example-basic-single"></select>
+            </div>
+
             <div class="mt-3 form-group">
                 <label for="body">Note</label>
                 @error('body')
@@ -104,13 +119,60 @@
         <a href="/notes" class="btn btn-secondary">Cancel</a>
     </form>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
-        document.addEventListener('trix-file-accept', function(e)) {
+        document.addEventListener('trix-file-accept', function(e) {
             e.preventDefault();
-        }
+        });
 
         $(document).ready(function() {
-            $('.js-example-basic-single').select2();
+            $('#contact').on('change', function() {
+                const selected = $(this).find('option:selected');
+                const cmp = selected.data('company');
+                console.log(cmp);
+
+                $("#company").val(cmp);
+            });
+        });
+
+        $(document).ready(function() {
+            $('#company').on('change', function() {
+                var companyID = $(this).val();
+                // console.log(companyID);
+                if (companyID) {
+                    $.ajax({
+                        url: '/notes/' + companyID,
+                        type: "GET",
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            console.log(data);
+                            if (data) {
+                                $('#contact').empty();
+                                $('#contact').focus;
+                                $('#contact').append(
+                                    '<option value="">-- Select Contact --</option>');
+                                $.each(data, function(key, value) {
+                                    $('select[name="contact"]').append('<option value="' +
+                                        key + '">' + value.contact_name + '</option>');
+                                });
+                            } else {
+                                $('#contact').empty();
+                            }
+                        }
+                    });
+                } else {
+                    $('#contact').empty();
+                }
+            });
         });
     </script>
 @endsection

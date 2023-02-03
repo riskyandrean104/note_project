@@ -31,13 +31,13 @@
     <form action="/contact" method="post">
         @csrf
         <div class="form-group">
-            <label for="company_id">Company</label>
-            <select class="form-control js-example-basic-single" id="company_id" name="company_id" style="width: 100%;">
+            <label for="company">Company</label>
+            <select class="form-control js-example-basic-single" id="company" name="company" style="width: 100%;">
                 @foreach ($company as $Company)
-                    @if (old('company_id') == $Company->id)
-                        <option value="{{ $Company->id }}" selected>{{ $Company->company_name }}</option>
+                    @if (old('company') == $Company->company_name)
+                        <option value="{{ $Company->company_name }}" selected>{{ $Company->company_name }}</option>
                     @else
-                        <option value="{{ $Company->id }}">{{ $Company->company_name }}</option>
+                        <option value="{{ $Company->company_name }}">{{ $Company->company_name }}</option>
                     @endif
                 @endforeach
             </select>

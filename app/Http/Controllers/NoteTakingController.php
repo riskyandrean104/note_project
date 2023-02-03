@@ -35,7 +35,7 @@ class NoteTakingController extends Controller
     {
         return view('forms.form_add_notes',[
             "event" => event::orderBy('event_name')->get(),
-            "contact" => contact_person::orderBy('contact_name')->get()
+            "contact" => contact_person::with('company')->orderBy('contact_name')->get()
         ]);
     }
 
@@ -50,9 +50,9 @@ class NoteTakingController extends Controller
         // dd($request);
         $validateData = $request->validate([
             'title' => 'required|max:255',
-            'event_id' => 'required',
-            'contact_id' => 'required',
-            'company_id' => 'required',
+            'event' => 'required',
+            'contact' => 'required',
+            'company' => 'required',
             'body' => 'required'
         ]);
         $validateData['user_id'] = auth()->user()->id;
@@ -68,9 +68,10 @@ class NoteTakingController extends Controller
      * @param  \App\Models\note_taking  $note_taking
      * @return \Illuminate\Http\Response
      */
-    public function show(note_taking $note_takings)
+    public function show($id)
     {
-        //
+        $contact = contact_person::where('company', $id)->get();
+        return response()->json($contact);
     }
 
     /**
@@ -84,7 +85,8 @@ class NoteTakingController extends Controller
         $note_taking = note_taking::findOrFail($id);
         return view('forms.form_edit_notes',[
             "note_taking" => $note_taking,
-            "company" => company::all()
+            "event" => event::all(),
+            "contact" => contact_person::all()
         ]);
     }
 
@@ -97,11 +99,13 @@ class NoteTakingController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request);
         $note_taking = note_taking::findOrFail($id);
         $rules = [
             'title' => 'required|max:255',
-            'event' => 'required|max:255',
-            'company_id' => 'required',
+            'event' => 'required',
+            'contact' => 'required',
+            'company' => 'required',
             'body' => 'required'
         ];
         $validateData = $request->validate($rules);
@@ -110,7 +114,7 @@ class NoteTakingController extends Controller
         note_taking::where('id', $note_taking->id)
                     ->update($validateData);
 
-        return redirect('/detail_note')->with('success', 'New note has been updated');
+        return redirect('/notes')->with('success', 'New note has been updated');
     }
 
     /**
@@ -123,6 +127,6 @@ class NoteTakingController extends Controller
     {
         note_taking::destroy($id);
 
-        return redirect('/detail_note')->with('success', 'Note has been deleted');
+        return redirect('/notes')->with('success', 'Note has been deleted');
     }
 }

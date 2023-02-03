@@ -69,7 +69,7 @@
                                                 </li>
                                                 <li class="small"><span class="fa-li"><i
                                                             class="fas fa-lg fa-building"></i></span> Company Name:
-                                                    {{ $Contact->company->company_name }}</li>
+                                                    {{ $Contact->company }}</li>
                                             </ul>
                                         </div>
                                     </div>

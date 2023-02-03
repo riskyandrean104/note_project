@@ -39,7 +39,7 @@ class AddContactsController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'company_id' => 'required',
+            'company' => 'required',
             'contact_name' => 'required|min:5|max:255',
             'phone_number' => 'required|max:255',
             'email' => 'required'

@@ -10,13 +10,13 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('../AdminLte/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('AdminLte/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="{{ asset('../AdminLte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('AdminLte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('../AdminLte/dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('AdminLte/dist/css/adminlte.min.css') }}">
     <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="{{ asset('../AdminLte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('AdminLte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     <!-- Select2 -->
     {{-- <link rel="stylesheet" href="{{ asset('../AdminLte/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet"
@@ -72,18 +72,18 @@
     <!-- ./wrapper -->
 
     <!-- jQuery -->
-    <script src="{{ asset('../AdminLte/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('AdminLte/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
-    <script src="{{ asset('../AdminLte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <!-- Select2 -->
-    {{-- <script src="{{ asset('../AdminLte/plugins/select2/js/select2.full.js') }}"></script> --}}
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ asset('AdminLte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    {{-- <!-- Select2 -->
+    <script src="{{ asset('../AdminLte/plugins/select2/js/select2.full.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <!-- overlayScrollbars -->
-    <script src="{{ asset('../AdminLte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+    <script src="{{ asset('AdminLte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <!-- SweetAlert2 -->
-    <script src="{{ asset('../AdminLte/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('AdminLte/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <!-- AdminLTE App -->
-    <script src="{{ asset('../AdminLte/dist/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('AdminLte/dist/js/adminlte.min.js') }}"></script>
 </body>
 
 </html>

@@ -70,8 +70,9 @@
                             <div class="card-body">
                                 {!! $Note_taking->body !!}
                                 <div class="card-footer">
-                                    {{-- Contact Name : {{ $Note_taking->contact_person->contact_name }} | --}}
-                                    Event : {{ $Note_taking->event->event_name }} |
+                                    Company : {{ $Note_taking->company }} |
+                                    Contact Name : {{ $Note_taking->contact }} |
+                                    Event : {{ $Note_taking->event }} |
                                     Last update : {{ $Note_taking->created_at }}
                                 </div>
                             </div>

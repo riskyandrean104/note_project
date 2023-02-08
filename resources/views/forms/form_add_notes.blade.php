@@ -60,14 +60,14 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="event">Event</label>
-                <select class="form-control js-example-basic-single" id="event" name="event" style="width: 100%;">
+                <label for="event_id">Event</label>
+                <select class="form-control js-example-basic-single" id="event_id" name="event_id" style="width: 100%;">
                     <option hidden>-Select Event-</option>
                     @foreach ($event as $Event)
-                        @if (old('event_name') == $Event->event_name)
-                            <option value="{{ $Event->event_name }}" selected>{{ $Event->event_name }}</option>
+                        @if (old('event_id') == $Event->id)
+                            <option value="{{ $Event->id }}" selected>{{ $Event->event_name }}</option>
                         @else
-                            <option value="{{ $Event->event_name }}">{{ $Event->event_name }}</option>
+                            <option value="{{ $Event->id }}">{{ $Event->event_name }}</option>
                         @endif
                     @endforeach
                 </select>
@@ -77,33 +77,22 @@
                     </div>
                 @enderror
             </div>
-            {{-- <div class="form-group">
-                <label for="contact">Contact</label>
-                <select class="form-control js-example-basic-single" id="contact" name="contact" style="width: 100%;">
-                    <option value="">-Select Contact-</option>
-                    @foreach ($contact as $Contact)
-                        <option value="{{ $Contact->contact_name }}" data-company="{{ $Contact->company }}">
-                            {{ $Contact->contact_name }}</option>
-                    @endforeach
-                </select>
-                <label for="company" class="mt-3">Company</label>
-
-                <input type="text" class="form-control @error('company') is-invalid @enderror" id="company"
-                    name="company" readonly>
-            </div> --}}
-
             <div class="form-group">
-                <label for="company">Company</label>
-                <select name="company" id="company" class="form-control js-example-basic-single">
+                <label for="company_id">Company</label>
+                <select name="company_id" id="company_id" class="form-control js-example-basic-single">
                     <option hidden>-Select Company-</option>
                     @foreach ($contact as $Contact)
-                        <option value="{{ $Contact->company }}">{{ $Contact->company }}</option>
+                        @if (old('company_id') == $Contact->company->id)
+                            <option value="{{ $Contact->company->id}}" selected>{{ $Contact->company->company_name }}</option>
+                        @else
+                            <option value="{{ $Contact->company->id }}">{{ $Contact->company->company_name }}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>
             <div class="mt-3 form-group">
-                <label for="contact">Contact</label>
-                <select name="contact" id="contact" class="form-control js-example-basic-single"></select>
+                <label for="contact_id">Contact</label>
+                <select name="contact_id" id="contact_id" class="form-control js-example-basic-single"></select>
             </div>
 
             <div class="mt-3 form-group">
@@ -132,17 +121,7 @@
         });
 
         $(document).ready(function() {
-            $('#contact').on('change', function() {
-                const selected = $(this).find('option:selected');
-                const cmp = selected.data('company');
-                console.log(cmp);
-
-                $("#company").val(cmp);
-            });
-        });
-
-        $(document).ready(function() {
-            $('#company').on('change', function() {
+            $('#company_id').on('change', function() {
                 var companyID = $(this).val();
                 // console.log(companyID);
                 if (companyID) {
@@ -154,23 +133,26 @@
                         },
                         dataType: "json",
                         success: function(data) {
-                            console.log(data);
+                            // console.log(data);
                             if (data) {
-                                $('#contact').empty();
-                                $('#contact').focus;
-                                $('#contact').append(
+                                $('#contact_id').empty();
+                                $('#contact_id').focus;
+                                $('#contact_id').append(
                                     '<option value="">-- Select Contact --</option>');
                                 $.each(data, function(key, value) {
-                                    $('select[name="contact"]').append('<option value="' +
-                                        key + '">' + value.contact_name + '</option>');
+                                    console.log(value);
+                                    $('#contact_id').append(
+                                        '<option value="' +
+                                        value.id + '">' + value.contact_name +
+                                        '</option>');
                                 });
                             } else {
-                                $('#contact').empty();
+                                $('#contact_id').empty();
                             }
                         }
                     });
                 } else {
-                    $('#contact').empty();
+                    $('#contact_id').empty();
                 }
             });
         });

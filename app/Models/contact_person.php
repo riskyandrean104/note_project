@@ -10,13 +10,12 @@ class contact_person extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-    protected $with = ['company'];
 
     public function company(){
         return $this->belongsTo(company::class);
     }
 
     public function note_taking(){
-        return $this->hasMany(note_taking::class);
+        return $this->belongsTo(note_taking::class);
     }
 }

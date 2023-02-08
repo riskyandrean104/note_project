@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\company;
 use App\Models\contact_person;
+use App\Models\note_taking;
 use Illuminate\Http\Request;
 
 class AddContactsController extends Controller
@@ -26,7 +27,7 @@ class AddContactsController extends Controller
     public function create()
     {
         return view('forms.form_add_contact_note', [
-            'company' => company::orderBy('company_name')->get()
+            'company' => company::with('note_taking')->orderBy('company_name')->get()
         ]);
     }
 
@@ -39,7 +40,7 @@ class AddContactsController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'company' => 'required',
+            'company_id' => 'required',
             'contact_name' => 'required|min:5|max:255',
             'phone_number' => 'required|max:255',
             'email' => 'required'
@@ -57,9 +58,14 @@ class AddContactsController extends Controller
      * @param  \App\Models\company  $company
      * @return \Illuminate\Http\Response
      */
-    public function show(company $company)
+    public function show($id)
     {
-        //
+        $notes = note_taking::with('contact_person')->where([['user_id', auth()->user()->id],['contact_id', $id]])->orderBy('created_at', 'DESC')
+        ->filter(request(['search']))->paginate(5);
+        return view('view_by.notes_contact',[
+            "notes" => $notes,
+            "contacts" => contact_person::findOrFail($id)
+        ]);
     }
 
     /**

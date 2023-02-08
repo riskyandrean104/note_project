@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\company;
+use App\Models\note_taking;
 use Illuminate\Http\Request;
 
 class AddCompanyController extends Controller
@@ -52,9 +53,16 @@ class AddCompanyController extends Controller
      * @param  \App\Models\company  $company
      * @return \Illuminate\Http\Response
      */
-    public function show(company $company)
+    public function show($id)
     {
-        //
+        $notes = note_taking::with('company')->where([['user_id', auth()->user()->id],['company_id', $id]])->orderBy('created_at', 'DESC')
+        ->filter(request(['search']))->paginate(5);
+        return view('view_by.notes_company',[
+            "title" => "company_notes",
+            "active" => "company_notes",
+            "notes" => $notes,
+            "company" => company::findOrFail($id)
+        ]);
     }
 
     /**

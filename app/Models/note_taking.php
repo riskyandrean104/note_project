@@ -10,14 +10,17 @@ class note_taking extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-    protected $with = ['user', 'event', 'contact_person'];
     
     public function user(){
         return $this->belongsTo(User::class);
     }
 
+    public function company(){
+        return $this->belongsTo(company::class, 'company_id');
+    }
+
     public function contact_person(){
-        return $this->belongsTo(contact_person::class);
+        return $this->belongsTo(contact_person::class, 'contact_id');
     }
 
     public function event(){

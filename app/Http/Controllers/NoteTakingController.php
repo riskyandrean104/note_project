@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\note_taking;
+use App\Models\company;
 use App\Models\contact_person;
 use App\Models\event;
 use Illuminate\Http\Request;
@@ -50,9 +51,9 @@ class NoteTakingController extends Controller
         // dd($request);
         $validateData = $request->validate([
             'title' => 'required|max:255',
-            'event' => 'required',
-            'contact' => 'required',
-            'company' => 'required',
+            'event_id' => 'required',
+            'contact_id' => 'required',
+            'company_id' => 'required',
             'body' => 'required'
         ]);
         $validateData['user_id'] = auth()->user()->id;
@@ -70,7 +71,7 @@ class NoteTakingController extends Controller
      */
     public function show($id)
     {
-        $contact = contact_person::where('company', $id)->get();
+        $contact = contact_person::where('company_id', $id)->get();
         return response()->json($contact);
     }
 
@@ -103,9 +104,9 @@ class NoteTakingController extends Controller
         $note_taking = note_taking::findOrFail($id);
         $rules = [
             'title' => 'required|max:255',
-            'event' => 'required',
-            'contact' => 'required',
-            'company' => 'required',
+            'event_id' => 'required',
+            'contact_id' => 'required',
+            'company_id' => 'required',
             'body' => 'required'
         ];
         $validateData = $request->validate($rules);

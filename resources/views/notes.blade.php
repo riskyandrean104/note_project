@@ -35,11 +35,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
-                        <form action="/detail_note">
+                        <form action="/notes">
                             <div class="input-group">
                                 <input type="search" class="form-control form-control-lg"
-                                    placeholder="Type your keywords here" name="search"
-                                    value="{{ request('search') }}">
+                                    placeholder="Type your keywords here" name="search" value="{{ request('search') }}">
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-lg btn-default">
                                         <i class="fa fa-search"></i>
@@ -61,6 +60,35 @@
                             <div class="card-header">
                                 <h3 class="card-title"><b>{{ $Note_taking->title }}</b></h3>
                                 <div class="card-tools">
+                                    <a href="/notes/{{ $Note_taking->id }}/edit">
+                                        <button type="button" class="btn text-end">
+                                            <svg fill="#000000" width="16" height="16" viewBox="0 0 16 16"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M15.49 7.3h-1.16v6.35H1.67V3.28H8V2H1.67A1.21 1.21 0 0 0 .5 3.28v10.37a1.21 1.21 0 0 0 1.17 1.25h12.66a1.21 1.21 0 0 0 1.17-1.25z" />
+                                                <path
+                                                    d="M10.56 2.87 6.22 7.22l-.44.44-.08.08-1.52 3.16a1.08 1.08 0 0 0 1.45 1.45l3.14-1.53.53-.53.43-.43 4.34-4.36.45-.44.25-.25a2.18 2.18 0 0 0 0-3.08 2.17 2.17 0 0 0-1.53-.63 2.19 2.19 0 0 0-1.54.63l-.7.69-.45.44zM5.51 11l1.18-2.43 1.25 1.26zm2-3.36 3.9-3.91 1.3 1.31L8.85 9zm5.68-5.31a.91.91 0 0 1 .65.27.93.93 0 0 1 0 1.31l-.25.24-1.3-1.3.25-.25a.88.88 0 0 1 .69-.25z" />
+                                            </svg>
+                                            Edit
+                                        </button>
+                                    </a>
+                                    <form action="/notes/{{ $Note_taking->id }}" method="post" class="d-inline">
+                                        @method('delete')
+                                        @csrf
+                                        <button type="submit" class="btn text-end"
+                                            onclick="return confirm('Are you sure?')">
+                                            <svg width="16" height="16" viewBox="0 0 1024 1024" class="icon"
+                                                version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M960 160h-291.2a160 160 0 0 0-313.6 0H64a32 32 0 0 0 0 64h896a32 32 0 0 0 0-64zM512 96a96 96 0 0 1 90.24 64h-180.48A96 96 0 0 1 512 96zM844.16 290.56a32 32 0 0 0-34.88 6.72A32 32 0 0 0 800 320a32 32 0 1 0 64 0 33.6 33.6 0 0 0-9.28-22.72 32 32 0 0 0-10.56-6.72zM832 416a32 32 0 0 0-32 32v96a32 32 0 0 0 64 0v-96a32 32 0 0 0-32-32zM832 640a32 32 0 0 0-32 32v224a32 32 0 0 1-32 32H256a32 32 0 0 1-32-32V320a32 32 0 0 0-64 0v576a96 96 0 0 0 96 96h512a96 96 0 0 0 96-96v-224a32 32 0 0 0-32-32z"
+                                                    fill="#231815" />
+                                                <path
+                                                    d="M384 768V352a32 32 0 0 0-64 0v416a32 32 0 0 0 64 0zM544 768V352a32 32 0 0 0-64 0v416a32 32 0 0 0 64 0zM704 768V352a32 32 0 0 0-64 0v416a32 32 0 0 0 64 0z"
+                                                    fill="#231815" />
+                                            </svg>
+                                            Delete
+                                        </button>
+                                    </form>
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse"
                                         title="Collapse">
                                         <i class="fas fa-minus"></i>
@@ -70,19 +98,18 @@
                             <div class="card-body">
                                 {!! $Note_taking->body !!}
                                 <div class="card-footer">
-                                    Company : {{ $Note_taking->company }} |
-                                    Contact Name : {{ $Note_taking->contact }} |
-                                    Event : {{ $Note_taking->event }} |
-                                    Last update : {{ $Note_taking->created_at }}
+                                    Company : <a
+                                        href="/company/{{ $Note_taking->company_id }}">{{ $Note_taking->company->company_name }}
+                                        </a> |
+                                    Contact Name : <a
+                                        href="/contact/{{ $Note_taking->contact_person->id }}">{{ $Note_taking->contact_person->contact_name }}
+                                        </a> |
+                                    Event : <a
+                                        href="/events/{{ $Note_taking->event->id }}">{{ $Note_taking->event->event_name }}
+                                        </a> 
                                 </div>
                             </div>
                         </div>
-                        <a href="/notes/{{ $Note_taking->id }}/edit" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="/notes/{{ $Note_taking->id }}" method="post" class="d-inline">
-                            @method('delete')
-                            @csrf
-                            <input class="btn btn-sm btn-danger" type="submit" value="Delete" onclick="return confirm('Are you sure?')">
-                        </form>
                     </div>
                 @endforeach
                 <nav aria-label="Page navigation example">

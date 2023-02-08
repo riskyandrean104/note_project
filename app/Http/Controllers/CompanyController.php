@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\company;
+use App\Models\contact_person;
+use App\Models\note_taking;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -28,7 +30,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('forms.form_contacts', [
+        return view('forms.form_add_company', [
             "title" => "Contacts",
             "active" => "Contacts"
         ]);
@@ -44,10 +46,9 @@ class CompanyController extends Controller
     {
         $validateData = $request->validate([
             'company_name' => 'required|min:5|max:255',
-            'address' => 'required|max:255',
-            'phone_number' => 'required|max:255',
-            'email' => 'required'
+            'company_country' => 'required|min:5|max:255'
         ]);
+        $validateData['user_id'] = auth()->user()->id;
 
         Company::create($validateData);
 
@@ -60,9 +61,17 @@ class CompanyController extends Controller
      * @param  \App\Models\company  $company
      * @return \Illuminate\Http\Response
      */
-    public function show(company $company)
+    public function show($id)
     {
-        //
+        $company = company::with('contact_person')->findOrFail($id);
+        // dd($contacts);
+        return view('view_by.company',[
+            "title" => "company_contact",
+            "active" => "company_contact",
+            "contacts" => contact_person::where('company_id', $id)->orderBy('created_at', 'DESC')
+            ->paginate(5),
+            "company" => $company
+        ]);
     }
 
     /**
@@ -73,11 +82,11 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        $company = company::findOrFail($id);
-        return view('forms.form_edit_contacts', [
+        $Company = company::findOrFail($id);
+        return view('forms.form_edit_company', [
             "title" => "Contacts",
             "active" => "Contacts",
-            "company" => $company
+            "Company" => $Company
         ]);
     }
 
@@ -90,19 +99,17 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $company = company::findOrFail($id);
+        $Company = company::findOrFail($id);
         $rules = [
             'company_name' => 'required|min:5|max:255',
-            'address' => 'required|max:255',
-            'phone_number' => 'required|max:255',
-            'email' => 'required'
+            'company_country' => 'required|min:5|max:255'
         ];
         $validateData = $request->validate($rules);
 
-        company::where('id', $company->id)
+        company::where('id', $Company->id)
                 ->update($validateData);
 
-        return redirect('/companies')->with('success', 'New note has been updated');
+        return redirect('/companies')->with('success', 'New company has been updated');
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\contact_person;
+use App\Models\company;
 use App\Http\Requests\Storecontact_personRequest;
 use App\Http\Requests\Updatecontact_personRequest;
 
@@ -27,7 +28,9 @@ class ContactPersonController extends Controller
      */
     public function create()
     {
-        //
+        return view('forms.form_add_contacts', [
+            'company' => company::orderBy('company_name')->get()
+        ]);
     }
 
     /**
@@ -38,7 +41,17 @@ class ContactPersonController extends Controller
      */
     public function store(Storecontact_personRequest $request)
     {
-        //
+        $validateData = $request->validate([
+            'company_id' => 'required',
+            'contact_name' => 'required|min:5|max:255',
+            'phone_number' => 'required|max:255',
+            'email' => 'required'
+        ]);
+        $validateData['user_id'] = auth()->user()->id;
+
+        contact_person::create($validateData);
+
+        return redirect('/contacts');
     }
 
     /**
@@ -47,9 +60,9 @@ class ContactPersonController extends Controller
      * @param  \App\Models\contact_person  $contact_person
      * @return \Illuminate\Http\Response
      */
-    public function show(contact_person $contact_person)
+    public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -58,9 +71,13 @@ class ContactPersonController extends Controller
      * @param  \App\Models\contact_person  $contact_person
      * @return \Illuminate\Http\Response
      */
-    public function edit(contact_person $contact_person)
+    public function edit($id)
     {
-        //
+        $Contact = contact_person::findOrFail($id);
+        return view('forms.form_edit_contacts',[
+            "Contact" => $Contact,
+            "company" => company::orderBy('company_name')->get()
+        ]);
     }
 
     /**
@@ -70,9 +87,22 @@ class ContactPersonController extends Controller
      * @param  \App\Models\contact_person  $contact_person
      * @return \Illuminate\Http\Response
      */
-    public function update(Updatecontact_personRequest $request, contact_person $contact_person)
+    public function update(Updatecontact_personRequest $request, $id)
     {
-        //
+        $Contact = contact_person::findOrFail($id);
+        $rules = [
+            'company_id' => 'required',
+            'contact_name' => 'required|min:5|max:255',
+            'phone_number' => 'required|max:255',
+            'email' => 'required'
+        ];
+        $validateData = $request->validate($rules);
+        $validateData['user_id'] = auth()->user()->id;
+
+        contact_person::where('id', $Contact->id)
+                    ->update($validateData);
+
+        return redirect('/contacts')->with('success', 'New contact has been updated');
     }
 
     /**
@@ -81,8 +111,10 @@ class ContactPersonController extends Controller
      * @param  \App\Models\contact_person  $contact_person
      * @return \Illuminate\Http\Response
      */
-    public function destroy(contact_person $contact_person)
+    public function destroy($id)
     {
-        //
+        contact_person::destroy($id);
+
+        return redirect('/contacts')->with('success', 'Note has been deleted');
     }
 }

@@ -10,10 +10,11 @@ class company extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+    protected $with = ['contact_person'];
 
-    // public function note_taking(){
-    //     return $this->hasMany(note_taking::class);
-    // }
+    public function note_taking(){
+        return $this->hasMany(note_taking::class);
+    }
 
     public function contact_person(){
         return $this->hasMany(contact_person::class);

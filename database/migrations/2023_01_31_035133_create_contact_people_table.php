@@ -16,10 +16,10 @@ class CreateContactPeopleTable extends Migration
         Schema::create('contact_people', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
+            $table->foreignId('company_id');
             $table->string('contact_name');
             $table->string('phone_number');
             $table->string('email')->unique();
-            $table->string('company');
             $table->timestamps();
         });
     }

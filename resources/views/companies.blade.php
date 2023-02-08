@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>List company</h1>
+                    <h1>List Company</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -27,7 +27,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
-                        <form action="/contacts">
+                        <form action="#">
                             <div class="input-group">
                                 <input type="search" class="form-control form-control-lg"
                                     placeholder="Type your keywords here" name="search" value="{{ request('search') }}">
@@ -60,15 +60,8 @@
                                             <h2 class="lead"><b>{{ $Company->company_name }}</b></h2>
                                             <ul class="ml-4 mb-0 fa-ul text-muted">
                                                 <li class="small"><span class="fa-li"><i
-                                                            class="fas fa-lg fa-building"></i></span> Address:
-                                                    {{ $Company->address }}</li>
-                                                <li class="small"><span class="fa-li"><i
-                                                            class="fas fa-lg fa-phone"></i></span> Phone :
-                                                    {{ $Company->phone_number }}
-                                                </li>
-                                                <li class="small"><span class="fa-li"><i
-                                                            class="fas fa-lg fa-envelope"></i></span> Email :
-                                                    {{ $Company->email }}
+                                                            class="fas fa-lg fa-building"></i></span> Country :
+                                                    {{ $Company->company_country }}</li>
                                                 </li>
                                             </ul>
                                         </div>
@@ -76,6 +69,9 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="text-right">
+                                        <a href="/companies/{{ $Company->id }}" class="btn btn-sm bg-primary">
+                                            Detail Contact
+                                        </a>
                                         <a href="/companies/{{ $Company->id }}/edit" class="btn btn-sm bg-warning">
                                             Edit
                                         </a>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\event;
+use App\Models\note_taking;
 use App\Http\Requests\StoreeventRequest;
 use App\Http\Requests\UpdateeventRequest;
 
@@ -16,8 +17,7 @@ class EventController extends Controller
     public function index()
     {
         return view('events', [
-            "events" => event::where('user_id', auth()->user()->id)->orderBy('event_name')
-            ->filter(request(['search']))->paginate(5)
+            "event" => event::where('user_id', auth()->user()->id)->orderBy('event_name')
         ]);
     }
 
@@ -55,9 +55,14 @@ class EventController extends Controller
      * @param  \App\Models\event  $event
      * @return \Illuminate\Http\Response
      */
-    public function show(event $event)
+    public function show($id)
     {
-        //
+        $notes = note_taking::with('event')->where([['user_id', auth()->user()->id],['event_id', $id]])->orderBy('created_at', 'DESC')
+        ->filter(request(['search']))->paginate(5);
+        return view('view_by.notes_event',[
+            "notes" => $notes,
+            "events" => event::findOrFail($id)
+        ]);
     }
 
     /**

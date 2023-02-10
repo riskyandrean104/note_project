@@ -45,6 +45,11 @@
                         </div>
                     </div>
                 @endforeach
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        {{ $notes->links() }}
+                    </ul>
+                </nav>
             </div>
         </div>
     </section>

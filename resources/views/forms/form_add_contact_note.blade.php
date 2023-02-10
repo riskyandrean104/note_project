@@ -32,7 +32,7 @@
         @csrf
         <div class="form-group">
             <label for="company_id">Company</label>
-            <select class="form-control js-example-basic-single" id="company_id" name="company_id" style="width: 100%;">
+            <select class="form-control company-select2" id="company_id" name="company_id">
                 @foreach ($company as $Company)
                     @if (old('company_id') == $Company->id)
                         <option value="{{ $Company->id }}" selected>{{ $Company->company_name }}</option>
@@ -82,4 +82,16 @@
             <button type="submit" class="btn btn-lg float-right btn-outline-primary">Sumbit</button>
             <a href="/notes/create" class="btn btn-secondary">Cancel</a>
     </form>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('.company-select2').select2({
+                placeholder: "Select option below",
+                allowClear: true
+            });
+        });
+    </script>
+    
 @endsection

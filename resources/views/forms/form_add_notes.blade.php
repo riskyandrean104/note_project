@@ -53,16 +53,15 @@
                 <label for="title">Title</label>
                 <input type="text" class="form-control @error('title') is-invalid @enderror" id="title"
                     placeholder="Enter Note Title" name="title" required value="{{ old('title') }}">
-                @error('title')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
             </div>
+            @error('title')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
             <div class="form-group">
                 <label for="event_id">Event</label>
-                <select class="form-control js-example-basic-single" id="event_id" name="event_id" style="width: 100%;">
-                    <option hidden>-Select Event-</option>
+                <select class="form-control js-example-basic-single" id="event_id" name="event_id" height="16px">
                     @foreach ($event as $Event)
                         @if (old('event_id') == $Event->id)
                             <option value="{{ $Event->id }}" selected>{{ $Event->event_name }}</option>
@@ -71,21 +70,20 @@
                         @endif
                     @endforeach
                 </select>
-                @error('event')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
             </div>
+            @error('event')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
             <div class="form-group">
                 <label for="company_id">Company</label>
                 <select name="company_id" id="company_id" class="form-control js-example-basic-single">
-                    <option hidden>-Select Company-</option>
-                    @foreach ($contact as $Contact)
-                        @if (old('company_id') == $Contact->company->id)
-                            <option value="{{ $Contact->company->id}}" selected>{{ $Contact->company->company_name }}</option>
+                    @foreach ($company as $Company)
+                        @if (old('company_id') == $Company->id)
+                            <option value="{{ $Company->id }}" selected>{{ $Company->company_name }}</option>
                         @else
-                            <option value="{{ $Contact->company->id }}">{{ $Contact->company->company_name }}</option>
+                            <option value="{{ $Company->id }}">{{ $Company->company_name }}</option>
                         @endif
                     @endforeach
                 </select>
@@ -118,6 +116,13 @@
     <script>
         document.addEventListener('trix-file-accept', function(e) {
             e.preventDefault();
+        });
+
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2({
+                placeholder: 'Select an option',
+                allowClear: true
+            });
         });
 
         $(document).ready(function() {

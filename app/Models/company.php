@@ -24,9 +24,7 @@ class company extends Model
         $query->when($filters['search'] ?? false, function($query, $search){
             return $query->where(function($query) use ($search){
                 return $query->where('company_name', 'like', '%'.$search.'%')
-                            ->orWhere('address', 'like', '%'.$search.'%')
-                            ->orWhere('phone_number', 'like', '%'.$search.'%');
-                            // ->orWhere('company.id', 'like', '%'.$search->company_name.'%');
+                            ->orWhere('company_country', 'like', '%'.$search.'%');
             });
         });
     }

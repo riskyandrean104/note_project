@@ -36,7 +36,7 @@ class NoteTakingController extends Controller
     {
         return view('forms.form_add_notes',[
             "event" => event::orderBy('event_name')->get(),
-            "contact" => contact_person::with('company')->orderBy('contact_name')->get()
+            "company" => company::with('contact_person')->orderBy('company_name')->get()
         ]);
     }
 

@@ -17,7 +17,7 @@ class ContactPersonController extends Controller
     public function index()
     {
         return view('contacts', [
-            "contact" => contact_person::with('company')->orderBy('contact_name')->paginate(9)
+            "contact" => contact_person::with('company')->orderBy('contact_name')->filter(request(['search']))->paginate(9)
         ]);
     }
 

@@ -5,7 +5,7 @@
     @if (session()->has('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close" id=success>
             </button>
         </div>
     @endif
@@ -100,13 +100,13 @@
                                 <div class="card-footer">
                                     Company : <a
                                         href="/company/{{ $Note_taking->company_id }}">{{ $Note_taking->company->company_name }}
-                                        </a> |
+                                    </a> |
                                     Contact Name : <a
                                         href="/contact/{{ $Note_taking->contact_person->id }}">{{ $Note_taking->contact_person->contact_name }}
-                                        </a> |
+                                    </a> |
                                     Event : <a
                                         href="/events/{{ $Note_taking->event->id }}">{{ $Note_taking->event->event_name }}
-                                        </a> 
+                                    </a>
                                 </div>
                             </div>
                         </div>

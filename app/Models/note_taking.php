@@ -31,9 +31,7 @@ class note_taking extends Model
         $query->when($filters['search'] ?? false, function($query, $search){
             return $query->where(function($query) use ($search){
                 return $query->where('title', 'like', '%'.$search.'%')
-                            ->orWhere('body', 'like', '%'.$search.'%')
-                            ->orWhere('event', 'like', '%'.$search.'%');
-                            // ->orWhere('company.id', 'like', '%'.$search->company_name.'%');
+                            ->orWhere('body', 'like', '%'.$search.'%');
             });
         });
 

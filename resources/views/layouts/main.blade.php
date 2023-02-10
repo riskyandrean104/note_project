@@ -15,13 +15,11 @@
     <link rel="stylesheet" href="{{ asset('AdminLte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('AdminLte/dist/css/adminlte.min.css') }}">
-    <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="{{ asset('AdminLte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
-    <!-- Select2 -->
-    {{-- <link rel="stylesheet" href="{{ asset('../AdminLte/plugins/select2/css/select2.min.css') }}">
-    <link rel="stylesheet"
-        href="{{ asset('../AdminLte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}"> --}}
+    {{-- Select2 --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    {{-- Bootstrap --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     {{-- Include library trix editor --}}
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
     <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
@@ -73,15 +71,12 @@
 
     <!-- jQuery -->
     <script src="{{ asset('AdminLte/plugins/jquery/jquery.min.js') }}"></script>
-    <!-- Bootstrap 4 -->
-    <script src="{{ asset('AdminLte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    {{-- <!-- Select2 -->
-    <script src="{{ asset('../AdminLte/plugins/select2/js/select2.full.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
-    <!-- overlayScrollbars -->
-    <script src="{{ asset('AdminLte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-    <!-- SweetAlert2 -->
-    <script src="{{ asset('AdminLte/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
+    </script>
+    <!-- Select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('AdminLte/dist/js/adminlte.min.js') }}"></script>
 </body>

@@ -45,12 +45,12 @@
                                 </div>
                             </div>
                         </div>
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center">
-                                {{-- {{ $contact->links() }} --}}
-                            </ul>
-                        </nav>
                     @endforeach
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            {{ $contacts->links() }}
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>

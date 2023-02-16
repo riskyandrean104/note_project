@@ -60,10 +60,9 @@ class AddContactsController extends Controller
      */
     public function show($id)
     {
-        $notes = note_taking::with('contact_person')->where([['user_id', auth()->user()->id],['contact_id', $id]])->orderBy('created_at', 'DESC')
-        ->filter(request(['search']))->paginate(5);
         return view('view_by.notes_contact',[
-            "notes" => $notes,
+            "notes" => note_taking::with('contact_person')->where([['user_id', auth()->user()->id],['contact_id', $id]])->orderBy('created_at', 'DESC')
+            ->filter(request(['search']))->paginate(5),
             "contacts" => contact_person::findOrFail($id)
         ]);
     }

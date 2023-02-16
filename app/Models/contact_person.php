@@ -24,7 +24,10 @@ class contact_person extends Model
             return $query->where(function($query) use ($search){
                 return $query->where('contact_name', 'like', '%'.$search.'%')
                             ->orWhere('phone_number', 'like', '%'.$search.'%')
-                            ->orWhere('email', 'like', '%'.$search.'%');
+                            ->orWhere('email', 'like', '%'.$search.'%')
+                            ->orWhereHas('company', function($query) use ($search){
+                                return $query->where('company_name', 'like', '%'.$search.'%');
+                            })->with('company');
             });
         });
     }

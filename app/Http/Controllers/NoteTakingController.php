@@ -23,7 +23,7 @@ class NoteTakingController extends Controller
             "title" => "All Notes",
             "active" => "Notes",
             "note_taking" => note_taking::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')
-            ->filter(request(['search']))->paginate(5)
+            ->filter(request(['search', 'company']))->paginate(5)
         ]);
     }
 

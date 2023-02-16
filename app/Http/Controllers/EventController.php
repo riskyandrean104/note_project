@@ -17,7 +17,7 @@ class EventController extends Controller
     public function index()
     {
         return view('events', [
-            "event" => event::where('user_id', auth()->user()->id)->orderBy('event_name')
+            "event" => event::orderBy('event_name')->filter(request(['search']))->paginate(9)
         ]);
     }
 
@@ -57,11 +57,10 @@ class EventController extends Controller
      */
     public function show($id)
     {
-        $notes = note_taking::with('event')->where([['user_id', auth()->user()->id],['event_id', $id]])->orderBy('created_at', 'DESC')
-        ->filter(request(['search']))->paginate(5);
         return view('view_by.notes_event',[
-            "notes" => $notes,
-            "events" => event::findOrFail($id)
+            "notes" => note_taking::with('event')->where([['user_id', auth()->user()->id],['event_id', $id]])->orderBy('created_at', 'DESC')
+            ->filter(request(['search']))->paginate(5),
+            "events" => event::findOrFail($id)->load('note_taking')
         ]);
     }
 
@@ -71,9 +70,11 @@ class EventController extends Controller
      * @param  \App\Models\event  $event
      * @return \Illuminate\Http\Response
      */
-    public function edit(event $event)
+    public function edit($id)
     {
-        //
+        return view('forms.form_edit_event',[
+            "event" => event::findOrFail($id)
+        ]);
     }
 
     /**
@@ -83,9 +84,19 @@ class EventController extends Controller
      * @param  \App\Models\event  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateeventRequest $request, event $event)
+    public function update(UpdateeventRequest $request, $id)
     {
-        //
+        $Event = event::findOrFail($id);
+        $rules = [
+            'event_name' => 'required'
+        ];
+        $validateData = $request->validate($rules);
+        $validateData['user_id'] = auth()->user()->id;
+
+        event::where('id', $Event->id)
+                    ->update($validateData);
+
+        return redirect('/contacts')->with('success', 'New contact has been updated');
     }
 
     /**
@@ -96,6 +107,8 @@ class EventController extends Controller
      */
     public function destroy(event $event)
     {
-        //
+        event::destroy($id);
+
+        return redirect('/contacts')->with('success', 'Event has been deleted');
     }
 }

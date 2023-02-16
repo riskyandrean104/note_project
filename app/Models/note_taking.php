@@ -31,15 +31,18 @@ class note_taking extends Model
         $query->when($filters['search'] ?? false, function($query, $search){
             return $query->where(function($query) use ($search){
                 return $query->where('title', 'like', '%'.$search.'%')
-                            ->orWhere('body', 'like', '%'.$search.'%');
+                            ->orWhere('body', 'like', '%'.$search.'%')
+                            ->orWhereHas('company', function($query) use ($search){
+                                return $query->where('company_name', 'like', '%'.$search.'%');
+                            })->with('company')
+                            ->orWhereHas('event', function($query) use ($search){
+                                return $query->where('event_name', 'like', '%'.$search.'%');
+                            })->with('event')
+                            ->orWhereHas('contact_person', function($query) use ($search){
+                                return $query->where('contact_name', 'like', '%'.$search.'%');
+                            })->with('contact_person');
             });
         });
-
-        // $query->when($filters['company'] ?? false, function($query, $company){
-        //     return $query->whereHas('company', function($query) use ($company){
-        //         $query->where('company_name', $company->company_name);
-        //     });
-        // });
     }
 
 }

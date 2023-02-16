@@ -13,7 +13,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6 mt-4">
-                    <h1>{{ $company->company_name }} Notes</h1>
+                    <h1> {{ $company->company_name }} Notes</h1>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
@@ -45,11 +45,11 @@
                         </div>
                     </div>
                 @endforeach
-                <nav aria-label="Page navigation example">
+                {{-- <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
                         {{ $notes->links() }}
                     </ul>
-                </nav>
+                </nav> --}}
             </div>
         </div>
     </section>

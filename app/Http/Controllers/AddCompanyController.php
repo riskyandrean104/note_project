@@ -55,13 +55,12 @@ class AddCompanyController extends Controller
      */
     public function show($id)
     {
-        $notes = note_taking::with('company')->where([['user_id', auth()->user()->id],['company_id', $id]])->orderBy('created_at', 'DESC')
-        ->filter(request(['search']))->paginate(5);
         return view('view_by.notes_company',[
             "title" => "company_notes",
             "active" => "company_notes",
-            "notes" => $notes,
-            "company" => company::findOrFail($id)
+            "company" => company::findOrFail($id),
+            "notes" => note_taking::with('company')->where([['user_id', auth()->user()->id],['company_id', $id]])->orderBy('created_at', 'DESC')
+            ->filter(request(['search']))->paginate(5)
         ]);
     }
 

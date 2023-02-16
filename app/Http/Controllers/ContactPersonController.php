@@ -73,9 +73,8 @@ class ContactPersonController extends Controller
      */
     public function edit($id)
     {
-        $Contact = contact_person::findOrFail($id);
         return view('forms.form_edit_contacts',[
-            "Contact" => $Contact,
+            "Contact" => contact_person::findOrFail($id),
             "company" => company::orderBy('company_name')->get()
         ]);
     }

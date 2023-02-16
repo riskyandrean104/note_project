@@ -63,14 +63,12 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        $company = company::with('contact_person')->findOrFail($id);
-        // dd($contacts);
         return view('view_by.company',[
             "title" => "company_contact",
             "active" => "company_contact",
             "contacts" => contact_person::where('company_id', $id)->orderBy('created_at', 'DESC')
-            ->paginate(5),
-            "company" => $company
+            ->paginate(9),
+            "company" => company::with('contact_person')->findOrFail($id)
         ]);
     }
 
@@ -82,11 +80,10 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        $Company = company::findOrFail($id);
         return view('forms.form_edit_company', [
             "title" => "Contacts",
             "active" => "Contacts",
-            "Company" => $Company
+            "Company" => company::findOrFail($id)
         ]);
     }
 

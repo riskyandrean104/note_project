@@ -26,14 +26,14 @@
                 data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
        with font-awesome or any other icon font library -->
-                {{-- <li class="nav-item">
+                <li class="nav-item">
                     <a href="/events" class="nav-link">
                         <i class="nav-icon fas fa-pen-nib"></i>
                         <p>
                             Events
                         </p>
                     </a>
-                </li> --}}
+                </li>
                 <li class="nav-item">
                     <a href="/notes" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>

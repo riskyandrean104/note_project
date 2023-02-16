@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <a href="/notes/create" method="get">
+                        <a href="/events/create" method="get">
                             <button type="button" class="btn text-end">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-plus-square" viewBox="0 0 16 16">
@@ -55,23 +55,36 @@
         <div class="container-fluid">
             <div class="row">
                 @foreach ($event as $Event)
-                    <div class="col-12 mb-3">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title"><b>{{ $Event->event_name }}</b></h3>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                                        title="Collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
+                <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+                    <div class="card bg-light d-flex flex-fill">
+                        <div class="card-header text-muted border-bottom-0">
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="col">
+                                <div class="col">
+                                    <h2 class="lead"><b>{{ $Event->event_name }}</b></h2>
                                 </div>
                             </div>
                         </div>
+                        <div class="card-footer">
+                            <div class="text-right">
+                                <a href="/events/{{ $Event->id }}/edit" class="btn btn-sm bg-warning">
+                                    Edit
+                                </a>
+                                <form action="/events/{{ $Event->id }}" method="post" class="d-inline">
+                                    @method('delete')
+                                    @csrf
+                                    <input class="btn btn-sm btn-danger" type="submit" value="Delete"
+                                        onclick="return confirm('Are you sure?')">
+                                </form>
+                            </div>
+                        </div>
                     </div>
+                </div>
                 @endforeach
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
-                        {{-- {{ $note_taking->links() }} --}}
+                        {{ $event->links() }}
                     </ul>
                 </nav>
             </div>

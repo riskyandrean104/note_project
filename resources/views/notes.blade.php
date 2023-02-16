@@ -102,10 +102,10 @@
                                         href="/company/{{ $Note_taking->company_id }}">{{ $Note_taking->company->company_name }}
                                     </a> |
                                     Contact Name : <a
-                                        href="/contact/{{ $Note_taking->contact_person->id }}">{{ $Note_taking->contact_person->contact_name }}
+                                        href="/contact/{{ $Note_taking->contact_id }}">{{ $Note_taking->contact_person->contact_name }}
                                     </a> |
                                     Event : <a
-                                        href="/events/{{ $Note_taking->event->id }}">{{ $Note_taking->event->event_name }}
+                                        href="/events/{{ $Note_taking->event_id }}">{{ $Note_taking->event->event_name }}
                                     </a>
                                 </div>
                             </div>

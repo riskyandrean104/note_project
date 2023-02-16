@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-sm-3">
                     <ol class="breadcrumb float-sm-right">
-                        <a href="/events/create">
+                        <a href="/events/create" method="get">
                             <button type="button" class="btn text-end">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-plus-square" viewBox="0 0 16 16">
@@ -53,15 +53,16 @@
                 <label for="title">Title</label>
                 <input type="text" class="form-control @error('title') is-invalid @enderror" id="title"
                     placeholder="Enter Note Title" name="title" required value="{{ old('title') }}">
+                @error('title')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-            @error('title')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-            @enderror
             <div class="form-group">
                 <label for="event_id">Event</label>
-                <select class="form-control js-example-basic-single" id="event_id" name="event_id" height="16px">
+                <select name="event_id" id="event_id" class="form-control js-example-basic-single">
+                    <option value="" disabled selected> </option>
                     @foreach ($event as $Event)
                         @if (old('event_id') == $Event->id)
                             <option value="{{ $Event->id }}" selected>{{ $Event->event_name }}</option>
@@ -71,20 +72,12 @@
                     @endforeach
                 </select>
             </div>
-            @error('event')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-            @enderror
             <div class="form-group">
                 <label for="company_id">Company</label>
                 <select name="company_id" id="company_id" class="form-control js-example-basic-single">
+                    <option value="" disabled selected></option>
                     @foreach ($company as $Company)
-                        @if (old('company_id') == $Company->id)
-                            <option value="{{ $Company->id }}" selected>{{ $Company->company_name }}</option>
-                        @else
-                            <option value="{{ $Company->id }}">{{ $Company->company_name }}</option>
-                        @endif
+                        <option value="{{ $Company->id }}">{{ $Company->company_name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -95,10 +88,10 @@
 
             <div class="mt-3 form-group">
                 <label for="body">Note</label>
+                <input id="body" type="hidden" name="body" value="{{ old('body') }}">
                 @error('body')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
-                <input id="body" type="hidden" name="body" value="{{ old('body') }}">
                 <trix-editor input="body"></trix-editor>
             </div>
         </div>

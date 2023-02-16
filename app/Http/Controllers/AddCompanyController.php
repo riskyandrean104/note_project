@@ -37,8 +37,9 @@ class AddCompanyController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'company_name' => 'required|min:5|max:255',
-            'company_country' => 'required|min:5|max:255'
+            'company_name' => 'required|min:3|max:255',
+            'agent_type' => 'required',
+            'company_country' => 'required|min:2|max:255'
         ]);
         $validateData['user_id'] = auth()->user()->id;
 

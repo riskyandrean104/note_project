@@ -60,8 +60,12 @@
                                             <h2 class="lead"><b>{{ $Company->company_name }}</b></h2>
                                             <ul class="ml-4 mb-0 fa-ul text-muted">
                                                 <li class="small"><span class="fa-li"><i
-                                                            class="fas fa-lg fa-building"></i></span> Country :
+                                                            class="fas fa-lg fa-globe"></i></span> Country :
                                                     {{ $Company->company_country }}</li>
+                                                </li>
+                                                <li class="small"><span class="fa-li"><i
+                                                            class="fas fa-lg fa-building"></i></span> Agent Type :
+                                                    {{ $Company->agent_type }}</li>
                                                 </li>
                                             </ul>
                                         </div>
@@ -94,5 +98,7 @@
                 </div>
             </div>
         </div>
+        
+        <a href="/contacts" class="btn btn-secondary">Back</a>
     </section>
 @endsection()

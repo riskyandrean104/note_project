@@ -45,8 +45,9 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'company_name' => 'required|min:5|max:255',
-            'company_country' => 'required|min:5|max:255'
+            'company_name' => 'required|min:3|max:255',
+            'company_country' => 'required|min:2|max:255',
+            'agent_type' => 'required'
         ]);
         $validateData['user_id'] = auth()->user()->id;
 
@@ -98,8 +99,9 @@ class CompanyController extends Controller
     {
         $Company = company::findOrFail($id);
         $rules = [
-            'company_name' => 'required|min:5|max:255',
-            'company_country' => 'required|min:5|max:255'
+            'company_name' => 'required|min:3|max:255',
+            'company_country' => 'required|min:2|max:255',
+            'agent_type' => 'required'
         ];
         $validateData = $request->validate($rules);
 
@@ -119,6 +121,6 @@ class CompanyController extends Controller
     {
         Company::destroy($id);
 
-        return redirect('/companies')->with('success', 'Note has been deleted');
+        return redirect('/companies')->with('success', 'Company has been deleted');
     }
 }

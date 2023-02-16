@@ -1,14 +1,6 @@
 @extends('layouts.main')
 
 @section('container')
-    <!-- Content Header (Page header) -->
-    @if (session()->has('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close">
-            </button>
-        </div>
-    @endif
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -38,8 +30,7 @@
                             <div class="card-footer">
                                 Company : {{ $Notes->company->company_name }} |
                                 Contact Name : {{ $Notes->contact_person->contact_name }} |
-                                Event : {{ $Notes->event->event_name }} |
-                                Last update : {{ $Notes->created_at }}
+                                Event : {{ $Notes->event->event_name }}
                             </div>
                         </div>
                         </div>
@@ -52,5 +43,6 @@
                 </nav>
             </div>
         </div>
+        <a href="/notes" class="btn btn-secondary">Cancel</a>
     </section>
 @endsection()

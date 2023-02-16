@@ -23,7 +23,7 @@ class NoteTakingController extends Controller
             "title" => "All Notes",
             "active" => "Notes",
             "note_taking" => note_taking::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')
-            ->filter(request(['search', 'company']))->paginate(5)
+            ->filter(request(['search']))->paginate(5)
         ]);
     }
 
@@ -51,9 +51,9 @@ class NoteTakingController extends Controller
         // dd($request);
         $validateData = $request->validate([
             'title' => 'required|max:255',
-            'event_id' => 'required',
             'contact_id' => 'required',
             'company_id' => 'required',
+            'event_id' => 'required|max:255',
             'body' => 'required'
         ]);
         $validateData['user_id'] = auth()->user()->id;
@@ -83,11 +83,9 @@ class NoteTakingController extends Controller
      */
     public function edit($id)
     {
-        $note_taking = note_taking::findOrFail($id);
         return view('forms.form_edit_notes',[
-            "note_taking" => $note_taking,
-            "event" => event::all(),
-            "contact" => contact_person::all()
+            "note_taking" => note_taking::findOrFail($id),
+            "company" => company::with('contact_person')->orderBy('company_name')->get()
         ]);
     }
 
@@ -104,9 +102,9 @@ class NoteTakingController extends Controller
         $note_taking = note_taking::findOrFail($id);
         $rules = [
             'title' => 'required|max:255',
-            'event_id' => 'required',
             'contact_id' => 'required',
             'company_id' => 'required',
+            'event_id' => 'required|max:255',
             'body' => 'required'
         ];
         $validateData = $request->validate($rules);

@@ -41,8 +41,9 @@ class AddContactsController extends Controller
     {
         $validateData = $request->validate([
             'company_id' => 'required',
-            'contact_name' => 'required|min:5|max:255',
-            'phone_number' => 'required|max:255',
+            'title' => 'required|max:255',
+            'contact_name' => 'max:255',
+            'phone_number' => 'max:255',
             'email' => 'required'
         ]);
         $validateData['user_id'] = auth()->user()->id;

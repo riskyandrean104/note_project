@@ -18,7 +18,8 @@ class CreateContactPeopleTable extends Migration
             $table->foreignId('user_id');
             $table->foreignId('company_id');
             $table->string('contact_name');
-            $table->string('phone_number');
+            $table->string('title');
+            $table->string('phone_number')->nullable();
             $table->string('email')->unique();
             $table->timestamps();
         });

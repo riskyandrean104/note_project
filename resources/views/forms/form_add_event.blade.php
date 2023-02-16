@@ -16,7 +16,7 @@
             <div class="form-group">
                 <label for="event_name">Event Name</label>
                 <input type="text" class="form-control @error('event_name') is-invalid @enderror" id="event_name"
-                    placeholder="Enter event_name" name="event_name" required value="{{ old('event_name') }}">
+                    placeholder="Enter event_name" name="event_name" value="{{ old('event_name') }}">
                 @error('event_name')
                     <div class="invalid-feedback">
                         {{ $message }}

@@ -35,7 +35,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
-                        <form action="/detail_note">
+                        <form action="/events">
                             <div class="input-group">
                                 <input type="search" class="form-control form-control-lg"
                                     placeholder="Type your keywords here" name="search" value="{{ request('search') }}">
@@ -68,6 +68,9 @@
                         </div>
                         <div class="card-footer">
                             <div class="text-right">
+                                <a href="/events/{{ $Event->id }}" class="btn btn-sm bg-primary">
+                                    All Notes
+                                </a>
                                 <a href="/events/{{ $Event->id }}/edit" class="btn btn-sm bg-warning">
                                     Edit
                                 </a>

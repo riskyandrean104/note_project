@@ -1,19 +1,26 @@
 @extends('layouts.main')
 
 @section('container')
-    <!-- Content Header (Page header) -->
-    @if (session()->has('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close">
-            </button>
-        </div>
-    @endif
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6 mt-4">
                     <h1> {{ $company->company_name }} Notes</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <form action="/notes">
+                            <div class="input-group">
+                                <input type="search" class="form-control form-control-lg"
+                                    placeholder="Type your keywords here" name="search" value="{{ request('search') }}">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-lg btn-default">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </ol>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
@@ -34,23 +41,23 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                            {!! $Notes->body !!}
-                            <div class="card-footer">
-                                Company : {{ $Notes->company->company_name }} |
-                                Contact Name : {{ $Notes->contact_person->contact_name }} |
-                                Event : {{ $Notes->event->event_name }} |
-                                Last update : {{ $Notes->created_at }}
+                                {!! $Notes->body !!}
+                                <div class="card-footer">
+                                    Company : {{ $Notes->company->company_name }} |
+                                    Contact Name : {{ $Notes->contact_person->contact_name }} |
+                                    Event : {{ $Notes->event->event_name }}
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                 @endforeach
-                {{-- <nav aria-label="Page navigation example">
+                <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
                         {{ $notes->links() }}
                     </ul>
-                </nav> --}}
+                </nav>
             </div>
         </div>
+        <a href="/notes" class="btn btn-secondary">Cancel</a>
     </section>
 @endsection()

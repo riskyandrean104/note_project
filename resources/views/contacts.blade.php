@@ -74,6 +74,10 @@
                                             <h2 class="lead"><b>{{ $Contact->contact_name }}</b></h2>
                                             <ul class="ml-4 mb-0 fa-ul text-muted">
                                                 <li class="small"><span class="fa-li"><i
+                                                            class="fas fa-lg fa-user-graduate"></i></span> Title :
+                                                    {{ $Contact->title }}
+                                                </li>
+                                                <li class="small"><span class="fa-li"><i
                                                             class="fas fa-lg fa-phone"></i></span> Phone :
                                                     {{ $Contact->phone_number }}
                                                 </li>

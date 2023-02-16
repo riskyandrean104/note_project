@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\note_taking;
 use App\Models\company;
+use App\Models\contact_person;
+use App\Models\event;
 use Illuminate\Http\Request;
+use App\Http\Requests\Storenote_takingRequest;
+use App\Http\Requests\Updatenote_takingRequest;
 
-class DetailNoteController extends Controller
+class NoteTakingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,8 +34,9 @@ class DetailNoteController extends Controller
      */
     public function create()
     {
-        return view('forms.form_notes',[
-            "company" => company::all()
+        return view('forms.form_add_notes',[
+            "event" => event::orderBy('event_name')->get(),
+            "company" => company::with('contact_person')->orderBy('company_name')->get()
         ]);
     }
 
@@ -43,17 +48,19 @@ class DetailNoteController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $validateData = $request->validate([
             'title' => 'required|max:255',
-            'event' => 'required|max:255',
+            'contact_id' => 'required',
             'company_id' => 'required',
+            'event_id' => 'required|max:255',
             'body' => 'required'
         ]);
         $validateData['user_id'] = auth()->user()->id;
 
         note_taking::create($validateData);
 
-        return redirect('/detail_note')->with('success', 'New note has been added');
+        return redirect('/notes')->with('success', 'New note has been added');
     }
 
     /**
@@ -62,9 +69,10 @@ class DetailNoteController extends Controller
      * @param  \App\Models\note_taking  $note_taking
      * @return \Illuminate\Http\Response
      */
-    public function show(note_taking $note_takings)
+    public function show($id)
     {
-        //
+        $contact = contact_person::where('company_id', $id)->get();
+        return response()->json($contact);
     }
 
     /**
@@ -75,10 +83,9 @@ class DetailNoteController extends Controller
      */
     public function edit($id)
     {
-        $note_taking = note_taking::findOrFail($id);
         return view('forms.form_edit_notes',[
-            "note_taking" => $note_taking,
-            "company" => company::all()
+            "note_taking" => note_taking::findOrFail($id),
+            "company" => company::with('contact_person')->orderBy('company_name')->get()
         ]);
     }
 
@@ -91,11 +98,13 @@ class DetailNoteController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request);
         $note_taking = note_taking::findOrFail($id);
         $rules = [
             'title' => 'required|max:255',
-            'event' => 'required|max:255',
+            'contact_id' => 'required',
             'company_id' => 'required',
+            'event_id' => 'required|max:255',
             'body' => 'required'
         ];
         $validateData = $request->validate($rules);
@@ -104,7 +113,7 @@ class DetailNoteController extends Controller
         note_taking::where('id', $note_taking->id)
                     ->update($validateData);
 
-        return redirect('/detail_note')->with('success', 'New note has been updated');
+        return redirect('/notes')->with('success', 'New note has been updated');
     }
 
     /**
@@ -117,6 +126,6 @@ class DetailNoteController extends Controller
     {
         note_taking::destroy($id);
 
-        return redirect('/detail_note')->with('success', 'Note has been deleted');
+        return redirect('/notes')->with('success', 'Note has been deleted');
     }
 }

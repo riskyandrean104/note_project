@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\company;
-use App\Models\contact_person;
 use App\Models\note_taking;
 use Illuminate\Http\Request;
 
-class AddContactsController extends Controller
+class AddCompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,9 +25,7 @@ class AddContactsController extends Controller
      */
     public function create()
     {
-        return view('forms.form_add_contact_note', [
-            'company' => company::with('note_taking')->orderBy('company_name')->get()
-        ]);
+        return view('forms.form_add_company_note');
     }
 
     /**
@@ -40,17 +37,15 @@ class AddContactsController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'company_id' => 'required',
-            'title' => 'required|max:255',
-            'contact_name' => 'max:255',
-            'phone_number' => 'max:255',
-            'email' => 'required'
+            'company_name' => 'required|min:3|max:255',
+            'agent_type' => 'required',
+            'company_country' => 'required|min:2|max:255'
         ]);
         $validateData['user_id'] = auth()->user()->id;
 
-        contact_person::create($validateData);
+        Company::create($validateData);
 
-        return redirect('/notes/create');
+        return redirect('/contact/create');
     }
 
     /**
@@ -61,10 +56,12 @@ class AddContactsController extends Controller
      */
     public function show($id)
     {
-        return view('view_by.notes_contact',[
-            "notes" => note_taking::with('contact_person')->where([['user_id', auth()->user()->id],['contact_id', $id]])->orderBy('created_at', 'DESC')
-            ->filter(request(['search']))->paginate(5),
-            "contacts" => contact_person::findOrFail($id)
+        return view('view_by.notes_company',[
+            "title" => "company_notes",
+            "active" => "company_notes",
+            "company" => company::findOrFail($id),
+            "notes" => note_taking::with('company')->where([['user_id', auth()->user()->id],['company_id', $id]])->orderBy('created_at', 'DESC')
+            ->filter(request(['search']))->paginate(5)
         ]);
     }
 

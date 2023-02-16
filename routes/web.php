@@ -4,12 +4,14 @@ use App\Models\Post;
 use App\Models\company;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\DetailNoteController;
+use App\Http\Controllers\AddCompanyController;
+use App\Http\Controllers\NoteTakingController;
 use App\Http\Controllers\AddContactsController;
+use App\Http\Controllers\ContactPersonController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +31,9 @@ Route::post('/', [LoginController::Class, 'authenticate']);
 Route::post('/logout', [LoginController::Class, 'logout']);
 Route::post('/register', [RegisterController::class, 'store']);
 
+Route::resource('/events', EventController::class)->middleware('auth');
 Route::resource('/contact', AddContactsController::class)->middleware('auth');
-Route::resource('/contacts', ContactsController::class)->middleware('auth');
-Route::resource('/detail_note', DetailNoteController::class)->middleware('auth');
+Route::resource('/contacts', ContactPersonController::class)->middleware('auth');
+Route::resource('/company', AddCompanyController::class)->middleware('auth');
+Route::resource('/companies', CompanyController::class)->middleware('auth');
+Route::resource('/notes', NoteTakingController::class)->middleware('auth');

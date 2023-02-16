@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\company;
+use App\Models\contact_person;
+use App\Models\note_taking;
 use Illuminate\Http\Request;
 
-class ContactsController extends Controller
+class CompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,7 +30,7 @@ class ContactsController extends Controller
      */
     public function create()
     {
-        return view('forms.form_contacts', [
+        return view('forms.form_add_company', [
             "title" => "Contacts",
             "active" => "Contacts"
         ]);
@@ -43,15 +45,15 @@ class ContactsController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'company_name' => 'required|min:5|max:255',
-            'address' => 'required|max:255',
-            'phone_number' => 'required|max:255',
-            'email' => 'required'
+            'company_name' => 'required|min:3|max:255',
+            'company_country' => 'required|min:2|max:255',
+            'agent_type' => 'required'
         ]);
+        $validateData['user_id'] = auth()->user()->id;
 
         Company::create($validateData);
 
-        return redirect('/contacts');
+        return redirect('/companies');
     }
 
     /**
@@ -60,9 +62,15 @@ class ContactsController extends Controller
      * @param  \App\Models\company  $company
      * @return \Illuminate\Http\Response
      */
-    public function show(company $company)
+    public function show($id)
     {
-        //
+        return view('view_by.company',[
+            "title" => "company_contact",
+            "active" => "company_contact",
+            "contacts" => contact_person::where('company_id', $id)->orderBy('created_at', 'DESC')
+            ->paginate(9),
+            "company" => company::with('contact_person')->findOrFail($id)
+        ]);
     }
 
     /**
@@ -73,11 +81,10 @@ class ContactsController extends Controller
      */
     public function edit($id)
     {
-        $company = company::findOrFail($id);
-        return view('forms.form_edit_contacts', [
+        return view('forms.form_edit_company', [
             "title" => "Contacts",
             "active" => "Contacts",
-            "company" => $company
+            "Company" => company::findOrFail($id)
         ]);
     }
 
@@ -90,19 +97,18 @@ class ContactsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $company = company::findOrFail($id);
+        $Company = company::findOrFail($id);
         $rules = [
-            'company_name' => 'required|min:5|max:255',
-            'address' => 'required|max:255',
-            'phone_number' => 'required|max:255',
-            'email' => 'required'
+            'company_name' => 'required|min:3|max:255',
+            'company_country' => 'required|min:2|max:255',
+            'agent_type' => 'required'
         ];
         $validateData = $request->validate($rules);
 
-        company::where('id', $company->id)
+        company::where('id', $Company->id)
                 ->update($validateData);
 
-        return redirect('/contacts')->with('success', 'New note has been updated');
+        return redirect('/companies')->with('success', 'New company has been updated');
     }
 
     /**
@@ -115,6 +121,6 @@ class ContactsController extends Controller
     {
         Company::destroy($id);
 
-        return redirect('/contacts')->with('success', 'Note has been deleted');
+        return redirect('/companies')->with('success', 'Company has been deleted');
     }
 }

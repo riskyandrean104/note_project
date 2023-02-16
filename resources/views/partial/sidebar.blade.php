@@ -2,20 +2,17 @@
 <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <div class="brand-link">
-        <img src="{{ asset('ics_logo.jpg') }}" alt="ICS Logo"
-        class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="{{ asset('ics_logo.jpg') }}" alt="ICS Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8">
         <span class="brand-text font-weight-light">ICS - Notes</span>
     </div>
-    
+
     <!-- Sidebar -->
     <div class="sidebar-custom">
         <!-- Sidebar user (optional) -->
         <div class="user-panel mt-1 pb-1 mb-1 d-flex">
-            <div class="image">
-                <img src="{{ asset('ics_logo.jpg') }}" class="img-circle elevation-1" alt="User Image">
-            </div>
             <div class="info">
-                <div class="d-flex font-weight-light">{{ auth()->user()->name }}</div>
+                <div class="d-block text-light">Hello, {{ auth()->user()->name }}</div>
             </div>
         </div>
     </div>
@@ -27,7 +24,7 @@
                 <!-- Add icons to the links using the .nav-icon class
        with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="/detail_note" class="nav-link">
+                    <a href="/notes" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Notes
@@ -35,10 +32,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="/events" class="nav-link">
+                        <i class="nav-icon fas fa-pen-nib"></i>
+                        <p>
+                            Events
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="/contacts" class="nav-link">
                         <i class="nav-icon fas fa-book"></i>
                         <p>
-                            Contacts
+                            Contact
                         </p>
                     </a>
                 </li>

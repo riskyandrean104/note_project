@@ -15,7 +15,9 @@ class AddCompanyController extends Controller
      */
     public function index()
     {
-        //
+        // return view('view_by.all_company', [
+        //     "company" => company::orderBy('company_name')->filter(request(['search']))->paginate(9)
+        // ]);
     }
 
     /**

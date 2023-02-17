@@ -74,12 +74,12 @@
                                 <a href="/events/{{ $Event->id }}/edit" class="btn btn-sm bg-warning">
                                     Edit
                                 </a>
-                                <form action="/events/{{ $Event->id }}" method="post" class="d-inline">
+                                {{-- <form action="/events/{{ $Event->id }}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <input class="btn btn-sm btn-danger" type="submit" value="Delete"
                                         onclick="return confirm('Are you sure?')">
-                                </form>
+                                </form> --}}
                             </div>
                         </div>
                     </div>

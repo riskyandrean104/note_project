@@ -25,30 +25,36 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="event">Event</label>
-                <input type="text" class="form-control @error('event') is-invalid @enderror" id="event"
-                    placeholder="Enter an Event Name" name="event" value="{{ old('event', $note_taking->event) }}">
-                @error('event')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
+                <label for="event_id">Event</label>
+                <select name="event_id" id="event_id" class="form-control js-example-basic-single">
+                    <option value="" disabled selected> </option>
+                    @foreach ($event as $Event)
+                        @if (old('event_id', $note_taking->event_id) == $Event->id)
+                            <option value="{{ $Event->id }}" selected>{{ $Event->event_name }}</option>
+                        @else
+                            <option value="{{ $Event->id }}">{{ $Event->event_name }}</option>
+                        @endif
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label for="company_id">Company</label>
                 <select name="company_id" id="company_id" class="form-control js-example-basic-single">
+                    <option value="" disabled selected></option>
                     @foreach ($company as $Company)
                         @if (old('company_id', $note_taking->company_id) == $Company->id)
-                            <option value="{{ $Company->id}}" selected>{{ $Company->company_name }}</option>
+                            <option value="{{ $Company->id }}" selected>{{ $Company->company_name }}</option>
                         @else
-                            <option value="{{ $Company->id }}">{{ $Company->company_name }}</option>
+                        <option value="{{ $Company->id }}">{{ $Company->company_name }}</option>
                         @endif
                     @endforeach
                 </select>
             </div>
             <div class="mt-3 form-group">
                 <label for="contact_id">Contact</label>
-                <select name="contact_id" id="contact_id" class="form-control js-example-basic-single"></select>
+                <select name="contact_id" id="contact_id" class="form-control js-example-basic-single">
+                    <option value="{{ $note_taking->contact_id }}">{{ old($note_taking->contact_id) }}</option>
+                </select>
             </div>
 
             <div class="mt-3 form-group">
@@ -99,7 +105,6 @@
                                 $('#contact_id').append(
                                     '<option value="">-- Select Contact --</option>');
                                 $.each(data, function(key, value) {
-                                    console.log(value);
                                     $('#contact_id').append(
                                         '<option value="' +
                                         value.id + '">' + value.contact_name +

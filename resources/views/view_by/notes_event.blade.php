@@ -7,6 +7,21 @@
                 <div class="col-sm-6 mt-4">
                     <h1>{{ $events->event_name }} Notes</h1>
                 </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <form action="/events/{{ $events->id }}">
+                            <div class="input-group">
+                                <input type="search" class="form-control form-control-lg"
+                                    placeholder="Type your keywords here" name="search" value="{{ request('search') }}">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-lg btn-default">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </ol>
+                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>

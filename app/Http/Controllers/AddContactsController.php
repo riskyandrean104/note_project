@@ -16,7 +16,9 @@ class AddContactsController extends Controller
      */
     public function index()
     {
-        //
+        // return view('view_by.all_contact', [
+        //     "contact" => contact_person::orderBy('contact_name')->filter(request(['search']))->paginate(9)
+        // ]);
     }
 
     /**

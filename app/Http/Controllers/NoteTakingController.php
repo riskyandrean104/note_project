@@ -85,7 +85,8 @@ class NoteTakingController extends Controller
     {
         return view('forms.form_edit_notes',[
             "note_taking" => note_taking::findOrFail($id),
-            "company" => company::with('contact_person')->orderBy('company_name')->get()
+            "company" => company::with('contact_person')->orderBy('company_name')->get(),
+            "event" => event::orderBy('event_name')->get()
         ]);
     }
 
@@ -98,7 +99,6 @@ class NoteTakingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request);
         $note_taking = note_taking::findOrFail($id);
         $rules = [
             'title' => 'required|max:255',

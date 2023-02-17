@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <form action="/notes">
+                        <form action="/company/{{ $company->id }}">
                             <div class="input-group">
                                 <input type="search" class="form-control form-control-lg"
                                     placeholder="Type your keywords here" name="search" value="{{ request('search') }}">

@@ -19,7 +19,7 @@ class CompanyController extends Controller
         return view('companies', [
             "title" => "Contacts",
             "active" => "Contacts",
-            "company" => company::with('Note_taking')->orderBy('company_name')->filter(request(['search']))->paginate(9)
+            "company" => company::where('user_id', auth()->user()->id)->with('Note_taking')->orderBy('company_name')->filter(request(['search']))->paginate(9)
         ]);
     }
 
@@ -68,7 +68,7 @@ class CompanyController extends Controller
             "title" => "company_contact",
             "active" => "company_contact",
             "contacts" => contact_person::where('company_id', $id)->orderBy('created_at', 'DESC')
-            ->paginate(9),
+            ->filter(request(['search']))->paginate(9),
             "company" => company::with('contact_person')->findOrFail($id)
         ]);
     }

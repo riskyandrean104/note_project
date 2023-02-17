@@ -96,7 +96,7 @@ class EventController extends Controller
         event::where('id', $Event->id)
                     ->update($validateData);
 
-        return redirect('/contacts')->with('success', 'New contact has been updated');
+        return redirect('/events')->with('success', 'New events has been updated');
     }
 
     /**
@@ -105,10 +105,10 @@ class EventController extends Controller
      * @param  \App\Models\event  $event
      * @return \Illuminate\Http\Response
      */
-    public function destroy(event $event)
+    public function destroy($id)
     {
         event::destroy($id);
 
-        return redirect('/contacts')->with('success', 'Event has been deleted');
+        return redirect('/events')->with('success', 'Event has been deleted');
     }
 }
